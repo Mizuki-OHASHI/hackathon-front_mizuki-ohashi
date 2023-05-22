@@ -42,14 +42,14 @@ export const FetchUserInfo = async (
     });
 
     if (!res.ok) {
-      throw Error(`Failed to GET user info: ${res.status}`);
+      throw Error(`ユーザー情報の取得に失敗しました: ${res.status}`);
     }
 
     const userInfo = (await res.json()) as UserInfo;
 
     return userInfo;
   } catch (err) {
-    alert("Failed to connect to the server");
+    alert("サーバーとの接続に失敗しました");
     console.error(err);
 
     return;
