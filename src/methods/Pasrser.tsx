@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const Parser: FC<Props> = (lines) => {
-  const lineArr = lines.lines.split(/\n/);
+  const lineArr = lines.lines.replace(/\s*\\\n/, " ").split(/\n/);
 
   const lineParser = (line: string): JSX.Element => {
     for (let i = 0; i < arr.length; i++) {
