@@ -64,7 +64,7 @@ export const ViewMessages: FC<Props> = (props) => {
           </div>
         </div>
         <div>
-          <div>{m.edited ? "編集済み" : ""}</div>
+          <div className="text-gray">{m.edited ? "編集済み" : ""}</div>
         </div>
       </div>
     );
