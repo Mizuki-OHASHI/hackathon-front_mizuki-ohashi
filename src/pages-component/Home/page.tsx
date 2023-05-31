@@ -1,13 +1,11 @@
 import { FC, useEffect, useState } from "react";
 
-import { Header } from "./Home-component/Header";
-import { Sidebar } from "./Home-component/Sidebar";
-import { Thread } from "./Home-component/Thread";
+import { Header } from "./Home-component/header";
+import { Sidebar } from "./Home-component/sidebar";
+import { Thread } from "./Home-component/thread";
 import { FetchUserInfo } from "@/methods/Fetch";
 import { CurrentUserId } from "@/methods/Authenticate";
 import { EmptyUserInfo, UserInfo } from "@/components/Type";
-import { getAuth } from "firebase/auth";
-import { fireAuth } from "@/methods/firebase";
 
 export const Home: FC = () => {
   const theme = "blue";

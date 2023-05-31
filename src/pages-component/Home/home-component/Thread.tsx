@@ -1,7 +1,7 @@
 import { ChannelInfo, EmptyChannelInfo } from "@/components/Type";
 import { FC, useState, useEffect } from "react";
-import { ViewMessages } from "./Thread-component/ViewMessages";
-import { PostMessages } from "./Thread-component/PostMessages";
+import { ViewMessages } from "./Thread-component/viewMessages";
+import { PostMessages } from "./Thread-component/postMessages";
 import { FetchChannelInfo } from "@/methods/Fetch";
 import { useRouter } from "next/router";
 import { ConvQueryToString } from "@/methods/Tools";
