@@ -1,4 +1,4 @@
-import { Error } from "@/components/Type";
+import { MyError } from "@/components/Type";
 import { GetDateTime } from "./Tools";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
@@ -41,7 +41,7 @@ export const CreateUser = async (userId: string, name: string) => {
       body: JSON.stringify({ user: { id: userId, name: name } }),
     });
 
-    const error = (await res.json()) as Error;
+    const error = (await res.json()) as MyError;
 
     if (error.code != 0) {
       alert(
@@ -83,7 +83,7 @@ export const CreateMessage = async (
       }),
     });
 
-    const error = (await res.json()) as Error;
+    const error = (await res.json()) as MyError;
 
     if (error.code != 0) {
       alert(
