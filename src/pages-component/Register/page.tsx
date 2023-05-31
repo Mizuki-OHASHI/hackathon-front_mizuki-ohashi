@@ -23,21 +23,21 @@ export const Register: FC = () => {
     e.preventDefault();
     RegisterWithEmail(email, password);
     CreateUser(CurrentUserId(), name);
-    router.push("/home");
+    router.push("/home?workspaceid=default&channelid=default");
   };
 
   const createUserWithGoogle = (name: string): void => {
     LogInWithGoogle();
     CreateUser(CurrentUserId(), name);
-    router.push("/home");
+    router.push("/home?workspaceid=default&channelid=default");
   };
 
   return (
     <div>
       <div>
-        <div>REGISTER</div>
+        <div>新規登録</div>
         <div>
-          <div>NAME</div>
+          <div>名前</div>
           <input
             type="text"
             value={name}
@@ -53,7 +53,7 @@ export const Register: FC = () => {
             }}
           >
             <div>
-              <div>EMAIL</div>
+              <div>メールアドレス</div>
               <input
                 type="email"
                 value={email}
@@ -61,14 +61,14 @@ export const Register: FC = () => {
               ></input>
             </div>
             <div>
-              <div>PASSWORD</div>
+              <div>パスワード</div>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
             </div>
-            <input type="submit" value="Register with Email and Password" />
+            <input type="submit" value="メールアドレスとパスワードで登録する" />
           </form>
         </div>
       </div>
@@ -79,7 +79,7 @@ export const Register: FC = () => {
               createUserWithGoogle(name);
             }}
           >
-            Register with Google Account
+            Google アカウントで登録する
           </button>
         </div>
       </div>

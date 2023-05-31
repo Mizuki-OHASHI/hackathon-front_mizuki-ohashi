@@ -1,9 +1,9 @@
-import { UserInfo } from "@/components/Type";
+import { UserInfo, ChannelInfo } from "@/components/Type";
+import { Dispatch, SetStateAction } from "react";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
 const ver = process.env.NEXT_PUBLIC_BACK_END_VERSION;
 
-// Template
 export const Fetch = async (
   api: string,
   method: string,
@@ -18,40 +18,86 @@ export const Fetch = async (
       body: JSON.stringify({ dict }),
     });
 
-    if (!res.ok) {
-      throw Error(`Failed to ${method}: ${res.status}`);
-    }
+    const userInfo = (await res.json()) as UserInfo;
 
-    return res.json();
+    if (userInfo.error.code != 0) {
+      alert(
+        `エラー
+        ${userInfo.error.detail}`
+      );
+    }
+    return userInfo;
   } catch (err) {
-    alert("Failed to connect to the server");
+    alert("サーバーとの接続に失敗しました1");
     console.error(err);
-    return {};
+    return;
   }
 };
 
 export const FetchUserInfo = async (
-  userid: string
-): Promise<UserInfo | undefined> => {
+  userId: string,
+  setUserInfo: Dispatch<SetStateAction<UserInfo>>
+) => {
+  if (userId == "error") {
+    alert("読み込みに失敗しました2");
+    return;
+  }
   try {
-    const res = await fetch(`${uri}/v${ver}/user?id=${userid}`, {
+    const res = await fetch(`${uri}/v${ver}/user?id=${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    if (!res.ok) {
-      throw Error(`ユーザー情報の取得に失敗しました: ${res.status}`);
-    }
-
     const userInfo = (await res.json()) as UserInfo;
 
-    return userInfo;
-  } catch (err) {
-    alert("サーバーとの接続に失敗しました");
-    console.error(err);
+    if (userInfo.error.code != 0) {
+      alert(
+        `エラー
+        ${userInfo.error.detail}`
+      );
+    }
 
+    setUserInfo(userInfo);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました3");
+    console.error(err);
+    return;
+  }
+};
+
+export const FetchChannelInfo = async (
+  channelId: string,
+  setChannelInfo: Dispatch<SetStateAction<ChannelInfo>>
+) => {
+  if (channelId == undefined) {
+    alert("読み込みに失敗しました");
+    return;
+  }
+  try {
+    const res = await fetch(`${uri}/v${ver}/channel?id=${channelId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const channelInfo = (await res.json()) as ChannelInfo;
+
+    if (channelInfo.error.code != 0) {
+      alert(
+        `エラー
+        ${channelInfo.error.detail}`
+      );
+    }
+
+    setChannelInfo(channelInfo);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました7");
+    console.error(err);
     return;
   }
 };

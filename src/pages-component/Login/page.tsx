@@ -18,19 +18,21 @@ export const Login: FC = () => {
     password: string
   ): void => {
     e.preventDefault();
-    LogInWithEmail(email, password);
-    router.push(`/home`);
+    if (LogInWithEmail(email, password)) {
+      router.push("/home?workspaceid=default&channelid=default");
+    }
   };
 
   const loadHomeWithGoogle = (): void => {
-    LogInWithGoogle();
-    router.push(`/home`);
+    if (LogInWithGoogle()) {
+      router.push("/home?workspaceid=default&channelid=default");
+    }
   };
 
   return (
     <div>
       <div>
-        <div>LOG IN</div>
+        <div>ログイン</div>
         <div>
           <form
             onSubmit={(e) => {
@@ -38,7 +40,7 @@ export const Login: FC = () => {
             }}
           >
             <div>
-              <div>EMAIL</div>
+              <div>メールアドレス</div>
               <input
                 type="email"
                 value={email}
@@ -46,14 +48,17 @@ export const Login: FC = () => {
               ></input>
             </div>
             <div>
-              <div>PASSWORD</div>
+              <div>パスワード</div>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
             </div>
-            <input type="submit" value="Log in with Email and Password" />
+            <input
+              type="submit"
+              value="メールアドレスとパスワードでログインする"
+            />
           </form>
         </div>
       </div>
@@ -64,7 +69,7 @@ export const Login: FC = () => {
               loadHomeWithGoogle();
             }}
           >
-            Log in with Google Account
+            Google アカウントでログインする
           </button>
         </div>
       </div>
