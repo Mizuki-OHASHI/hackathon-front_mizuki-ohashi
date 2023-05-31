@@ -6,8 +6,6 @@ import { Thread } from "./Home-component/Thread";
 import { FetchUserInfo } from "@/methods/Fetch";
 import { CurrentUserId } from "@/methods/Authenticate";
 import { EmptyUserInfo, UserInfo } from "@/components/Type";
-import { getAuth } from "firebase/auth";
-import { fireAuth } from "@/methods/firebase";
 
 export const Home: FC = () => {
   const theme = "blue";

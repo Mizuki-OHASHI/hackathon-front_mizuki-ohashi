@@ -3,18 +3,12 @@ import { Parser } from "@/methods/Parser";
 import { CreateMessage } from "@/methods/Request";
 import { CurrentUserId } from "@/methods/Authenticate";
 import { useRouter } from "next/router";
-import { channel } from "diagnostics_channel";
 import { ConvQueryToString } from "@/methods/Tools";
-
-// type Props = {
-//   currentState: CurrentState | undefined;
-// };
 
 export const PostMessages: FC = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const router = useRouter();
-  const { workspaceid } = router.query;
   const { channelid } = router.query;
 
   const channelId = ConvQueryToString(channelid);
