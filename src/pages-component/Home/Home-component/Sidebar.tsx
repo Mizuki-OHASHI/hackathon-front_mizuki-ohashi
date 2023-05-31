@@ -1,8 +1,8 @@
 import { Channel, UserInfo, Workspace } from "@/components/Type";
 import { useRouter } from "next/router";
 import { FC, useEffect } from "react";
-import { CreateChannel } from "./Sidebar-component/Create";
-import { JoinChannel } from "./Sidebar-component/Join";
+import { CreateChannel } from "@/pages-component/Home/Home-component/Sidebar-component/Create";
+import { JoinChannel } from "@/pages-component/Home/Home-component/Sidebar-component/Join";
 
 type Props = {
   userInfo: UserInfo;
