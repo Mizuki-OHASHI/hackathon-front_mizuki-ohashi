@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Group,
-  Modal,
-  PasswordInput,
-  TextInput,
-} from "@mantine/core";
+import { Box, Group, Modal, PasswordInput, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { FC, FormEvent, useState } from "react";
