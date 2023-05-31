@@ -1,3 +1,4 @@
+// ------------ USER ------------
 export type User = {
   id: string;
   name: string;
@@ -6,6 +7,15 @@ export type User = {
   img: string;
 };
 
+export const EmptyUser: User = {
+  id: "",
+  name: "",
+  deleted: false,
+  bio: "",
+  img: "",
+};
+
+// ------------ CHANNEL ------------
 export type Channel = {
   id: string;
   name: string;
@@ -17,6 +27,18 @@ export type Channel = {
   Flag: boolean;
 };
 
+export const EmptyChannel = {
+  id: "",
+  name: "",
+  createdAt: "",
+  bio: "",
+  PublicPw: "",
+  PrivatePw: "",
+  Deleted: false,
+  Flag: false,
+};
+
+// ------------ WORKSPACE ------------
 export type Workspace = {
   id: string;
   name: string;
@@ -25,6 +47,15 @@ export type Workspace = {
   img: string;
 };
 
+export const EmptyWorkspace: Workspace = {
+  id: "",
+  name: "",
+  deleted: false,
+  bio: "",
+  img: "",
+};
+
+// ------------ MESSAGE ------------
 export type Message = {
   id: string;
   title: string;
@@ -37,16 +68,30 @@ export type Message = {
   deleted: boolean;
 };
 
+// ------------ ERROR ------------
 export type Error = {
   code: number;
   detail: string;
 };
 
+export const EmptyError = {
+  code: 100,
+  detail: "loading",
+};
+
+// ------------ INFO ------------
 export type UserInfo = {
   user: User;
   workspaces: Array<Workspace>;
   channels: Array<Channel>;
   error: Error;
+};
+
+export const EmptyUserInfo = {
+  user: EmptyUser,
+  workspaces: [],
+  channels: [],
+  error: EmptyError,
 };
 
 export type ChannelInfo = {
@@ -56,6 +101,13 @@ export type ChannelInfo = {
   error: Error;
 };
 
+export const EmptyChannelInfo: ChannelInfo = {
+  channel: EmptyChannel,
+  members: [],
+  messages: [],
+  error: EmptyError,
+};
+
 export type WorkspaceInfo = {
   workspace: Workspace;
   members: Array<User>;
@@ -63,6 +115,14 @@ export type WorkspaceInfo = {
   error: Error;
 };
 
+export const EmptyWorkspaceInfo: WorkspaceInfo = {
+  workspace: EmptyWorkspace,
+  members: [],
+  channels: [],
+  error: EmptyError,
+};
+
+// ------------ CUD ------------
 export type MessageCUD = {
   message: Message;
 };
@@ -79,98 +139,7 @@ export type JoinInfo = {
   owner: boolean;
 };
 
-/*
-
-
-export const NilUser: User = {
-  id: "",
-  name: "",
-  deleted: false,
-  bio: "",
-  img: "",
-};
-
-export const EmptyUser : Array<User> = []
-
-
-export type Icon = {
-  id: string;
-  name: string;
-  size: number;
-};
-
-
-
-export const NilChannel: Channel = {
-  id: "",
-  name: "",
-  createdAt: "",
-  bio: "",
-  PublicPw: "",
-  PrivatePw: "",
-  Deleted: false,
-  Flag: false
-}
-
-export const EmptyChannel : Array<Channel> = []
-
-
-
-
-export const EmptyWorkspace : Array<Workspace> = []
-
-
-
-
-export const EmptyMessage : Array<Message> = []
-
-
-export type Info = {
-  in: string;
-  out: Array<string>;
-  inid: string;
-}
-
-export type Map = {
-  info: Info;
-  users: Array<User>;
-  messages: Array<Message>;
-  channels: Array<Channel>;
-  workspaces: Array<Workspace>;
-}
-
-export const NilMap: Map = {
-  info: {
-    in: "",
-    out: [],
-    inid: ""
-  },
-  users: EmptyUser,
-  messages: EmptyMessage,
-  channels: EmptyChannel,
-  workspaces: EmptyWorkspace
-}
-
-
-
-export type Map_ = {
-  map: Map;
-  error: number
-}
-
-export const NilMap_ = {
-  map: NilMap,
-  error: 1
-}
-
-
-export type Cert = {
-  certId: string;
-  certPw: string
-}
-
-export type MapCert = {
-  cert: Cert;
-  map: Map
-}
-*/
+// export type CurrentState = {
+//   channelid: string;
+//   workspaceid: string;
+// };

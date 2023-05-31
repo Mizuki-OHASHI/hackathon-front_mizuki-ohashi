@@ -9,7 +9,7 @@ import {
 import { fireAuth } from "@/methods/firebase";
 
 export const CurrentUserId = (): string => {
-  return fireAuth.currentUser?.uid ?? "";
+  return fireAuth.currentUser?.uid ?? "ユーザの認証に失敗しました";
 };
 
 export const LogOut = (): void => {
@@ -24,26 +24,30 @@ export const LogOut = (): void => {
   }
 };
 
-export const LogInWithGoogle = (): void => {
+export const LogInWithGoogle = (): boolean => {
   const provider = new GoogleAuthProvider();
-
   signInWithPopup(fireAuth, provider)
     .then((res) => {
       const user = res.user;
       alert(`ログイン中のユーザー: ${user.displayName}`);
+      return true;
     })
     .catch((err) => {
       const errorMessage = err.message;
       alert(errorMessage);
+      return false;
     });
+  return true;
 };
 
-export const LogInWithEmail = (email: string, pwd: string): void => {
+export const LogInWithEmail = (email: string, pwd: string): boolean => {
   const auth = getAuth();
+  // setPersistence(auth, browserSessionPersistence);
   signInWithEmailAndPassword(auth, email, pwd)
     .then((res) => {
       const user = res.user;
       alert(`ログイン中のユーザー: ${user.email}`);
+      return true;
     })
     .catch((err) => {
       const errorCode = err.code;
@@ -69,10 +73,12 @@ export const LogInWithEmail = (email: string, pwd: string): void => {
         default:
           alert(`${errorCode} : ${errorMessage}`);
       }
+      return false;
     });
+  return false;
 };
 
-export const RegisterWithEmail = (email: string, pwd: string) => {
+export const RegisterWithEmail = (email: string, pwd: string): boolean => {
   if (
     confirm(
       `このメールアドレスとパスワードで新規登録しますか？
@@ -81,10 +87,12 @@ export const RegisterWithEmail = (email: string, pwd: string) => {
     )
   ) {
     const auth = getAuth();
+    // setPersistence(auth, browserSessionPersistence);
     createUserWithEmailAndPassword(auth, email, pwd)
       .then((res) => {
         const user = res.user;
         alert(`ログイン中のユーザー: ${user.email}`);
+        return true;
       })
       .catch((err) => {
         const errorCode = err.code;
@@ -101,6 +109,8 @@ export const RegisterWithEmail = (email: string, pwd: string) => {
           default:
             alert(`${errorCode} : ${errorMessage}`);
         }
+        return false;
       });
   }
+  return false;
 };

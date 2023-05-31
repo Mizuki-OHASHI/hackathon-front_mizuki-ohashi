@@ -1,3 +1,6 @@
+import { Error } from "@/components/Type";
+import { GetDateTime } from "./Tools";
+
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
 const ver = process.env.NEXT_PUBLIC_BACK_END_VERSION;
 
@@ -22,9 +25,9 @@ export const template_Fetch = async (
     alert("@@@に成功しました");
     return res.json();
   } catch (err) {
-    alert("サーバーとの接続に失敗しました");
+    alert("サーバーとの接続に失敗しました4");
     console.error(err);
-    return {};
+    return;
   }
 };
 
@@ -38,16 +41,63 @@ export const CreateUser = async (userId: string, name: string) => {
       body: JSON.stringify({ user: { id: userId, name: name } }),
     });
 
-    console.log({ user: { id: userId, name: name } });
+    const error = (await res.json()) as Error;
 
-    if (!res.ok) {
-      throw Error(`Failed to create user: ${res.status}`);
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return;
     }
+
     alert("ユーザーの新規登録に成功しました");
-    return res.json();
+    return;
   } catch (err) {
-    alert("サーバーとの接続に失敗しました");
+    alert("サーバーとの接続に失敗しました5");
     console.error(err);
-    return {};
+    return;
+  }
+};
+
+export const CreateMessage = async (
+  userId: string,
+  channelId: string,
+  title: string,
+  body: string
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/message`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: {
+          postedby: userId,
+          postedat: GetDateTime(),
+          channelid: channelId,
+          title: title,
+          body: body,
+        },
+      }),
+    });
+
+    const error = (await res.json()) as Error;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return;
+    }
+
+    alert("メッセージの送信に成功しました");
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました6");
+    console.error(err);
+    return;
   }
 };
