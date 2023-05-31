@@ -69,7 +69,7 @@ export type Message = {
 };
 
 // ------------ ERROR ------------
-export type Error = {
+export type MyError = {
   code: number;
   detail: string;
 };
@@ -84,7 +84,7 @@ export type UserInfo = {
   user: User;
   workspaces: Array<Workspace>;
   channels: Array<Channel>;
-  error: Error;
+  error: MyError;
 };
 
 export const EmptyUserInfo = {
@@ -98,7 +98,7 @@ export type ChannelInfo = {
   channel: Channel;
   members: Array<User>;
   messages: Array<Message>;
-  error: Error;
+  error: MyError;
 };
 
 export const EmptyChannelInfo: ChannelInfo = {
@@ -112,7 +112,7 @@ export type WorkspaceInfo = {
   workspace: Workspace;
   members: Array<User>;
   channels: Array<Channel>;
-  error: Error;
+  error: MyError;
 };
 
 export const EmptyWorkspaceInfo: WorkspaceInfo = {
