@@ -24,6 +24,7 @@ export type Channel = {
   PublicPw: string;
   PrivatePw: string;
   Deleted: boolean;
+  workspaceid: string;
   Flag: boolean;
 };
 
@@ -35,6 +36,7 @@ export const EmptyChannel = {
   PublicPw: "",
   PrivatePw: "",
   Deleted: false,
+  workspaceid: "",
   Flag: false,
 };
 

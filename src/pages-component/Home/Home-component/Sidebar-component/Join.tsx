@@ -1,100 +1,108 @@
 import {
   Box,
-  Button,
   Checkbox,
   Group,
   Modal,
   PasswordInput,
+  Select,
   TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
+import { RequestJoinChannel } from "@/methods/Request";
+import { FetchChannelInfo, FetchWorkspaceInfo } from "@/methods/Fetch";
+import {
+  Channel,
+  EmptyWorkspaceInfo,
+  UserInfo,
+  WorkspaceInfo,
+} from "@/methods/Type";
 
-export const JoinChannel: FC = () => {
+type Props = {
+  channels: Array<Channel>;
+  currentUserId: string;
+  workspaceId: string;
+};
+
+export const JoinChannel: FC<Props> = (props) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [workspaceInfo, setWorkspaceInfo] =
+    useState<WorkspaceInfo>(EmptyWorkspaceInfo);
+  const [channelsToJoin, setChannelsToJoin] = useState<
+    Array<{ value: string; label: string }>
+  >([]);
+  const [channelToJoin, setChannelToJoin] = useState("");
 
-  const handleSubmit = (
-    e: FormEvent<HTMLFormElement>,
-    values: typeof form.values
-  ) => {
-    e.preventDefault();
-    // Perform any logic or submit the form here
-    alert("チャンネルに参加しました");
+  const handleSubmit = (values: typeof form.values) => {
+    RequestJoinChannel(
+      props.currentUserId,
+      channelsToJoin.find((c) => {
+        return c.label == channelToJoin;
+      })?.value,
+      values.password,
+      values.owner
+    );
+    form.reset();
+    close();
   };
 
   const form = useForm({
     initialValues: {
-      name: "text",
-      privatePassword: "secret",
-      confirmPrivatePassword: "sevret",
-      publicPassword: "secret",
-      confirmPublicPassword: "sevret",
-      bio: "text",
-    },
-
-    // functions will be used to validate values at corresponding key
-    validate: {
-      name: (value) =>
-        value.length < 2 ? "Name must have at least 2 letters" : null,
-      privatePassword: (value) =>
-        value.length < 8 ? "Name must have at least 8 letters" : null,
-      confirmPrivatePassword: (value, values) =>
-        value !== values.privatePassword ? "Passwords did not match" : null,
-      publicPassword: (value) =>
-        value.length < 8 ? "Name must have at least 8 letters" : null,
-      confirmPublicPassword: (value, values) =>
-        value !== values.publicPassword ? "Passwords did not match" : null,
+      password: "",
+      owner: false,
     },
   });
 
+  useEffect(() => {
+    FetchWorkspaceInfo(props.workspaceId, setWorkspaceInfo);
+  }, [props.currentUserId, props.workspaceId]);
+
+  useEffect(() => {
+    if (workspaceInfo.channels != null && props.channels != null) {
+      setChannelsToJoin(
+        workspaceInfo.channels.map((c) => {
+          if (
+            props.channels.some((c_) => {
+              return c_.id == c.id;
+            })
+          ) {
+            return { value: c.id, label: c.name, disabled: true };
+          } else {
+            return { value: c.id, label: c.name };
+          }
+        })
+      );
+    }
+  }, [workspaceInfo, props.channels]);
+
   return (
-    <div>
-      <button onClick={open}>既存のチャンネルに参加</button>
-      <Modal opened={opened} onClose={close} title="既存のチャンネルに参加">
+    <div className="overflow-scroll">
+      <div className="hover:bg-blue-200 px-4 rounded">
+        <button onClick={open}>参加</button>
+      </div>
+      <Modal opened={opened} onClose={close} title="チャンネルに参加">
         <Box maw={300} mx="auto">
-          <form
-            onSubmit={(e) => {
-              form.onSubmit((values) => {
-                handleSubmit(e, values);
-              });
-            }}
-          >
-            <TextInput
-              withAsterisk
-              label="名前"
-              placeholder=""
-              {...form.getInputProps("name")}
+          <form onSubmit={form.onSubmit(handleSubmit)}>
+            <Select
+              label="チャンネル"
+              placeholder="チャンネルを１つ選択"
+              searchable
+              onSearchChange={setChannelToJoin}
+              searchValue={channelToJoin}
+              nothingFound="一致するチャンネルがありません"
+              data={channelsToJoin}
             />
             <PasswordInput
               withAsterisk
-              label="管理者用パスワード"
+              label={form.values.owner ? "管理者用パスワード" : "パスワード"}
               placeholder=""
-              {...form.getInputProps("privatePassword")}
+              {...form.getInputProps("password")}
             />
-            <PasswordInput
-              withAsterisk
-              label="管理者用パスワード（確認）"
-              placeholder=""
-              {...form.getInputProps("confirmPrivatePassword")}
-            />
-            <PasswordInput
-              withAsterisk
-              label="公開用パスワード"
-              placeholder=""
-              {...form.getInputProps("publicPassword")}
-            />
-            <PasswordInput
-              withAsterisk
-              label="管理者用パスワード（確認）"
-              placeholder=""
-              {...form.getInputProps("confirmPublicPassword")}
-            />
-            <TextInput
-              withAsterisk
-              label="説明"
-              placeholder="後から追加することもできます"
-              {...form.getInputProps("bio")}
+            <Checkbox
+              mt="md"
+              label="管理者として参加する"
+              {...form.getInputProps("owner", { type: "checkbox" })}
             />
             <Group position="center" mt="md">
               <button type="submit">参加</button>

@@ -1,4 +1,4 @@
-src
+./src
 ├── app
 │   ├── favicon.ico.txt
 │   ├── globals.css.txt
@@ -7,8 +7,8 @@ src
 ├── components
 │   ├── Header.txt
 │   ├── Layout.txt
-│   ├── ShowIcon.txt
-│   └── Type.tsx
+│   ├── MenuBurger.txt
+│   └── ShowIcon.txt
 ├── methods
 │   ├── Authenticate.tsx
 │   ├── Fetch.tsx
@@ -16,7 +16,9 @@ src
 │   ├── Request.tsx
 │   ├── ShortCut.txt
 │   ├── Tools.tsx
-│   └── firebase.ts
+│   ├── Type.tsx
+│   ├── firebase.ts
+│   └── gpt.ts
 ├── pages
 │   ├── _app.tsx
 │   ├── _document.tsx
@@ -25,20 +27,26 @@ src
 │   ├── index_.txt
 │   ├── login.tsx
 │   ├── register.tsx
-│   └── setting.tsx
+│   ├── settings
+│   │   ├── channel.tsx
+│   │   └── user.tsx
+│   └── settings.tsx
 ├── pages-component
 │   ├── Home
 │   │   ├── Home-component
-│   │   │   ├── CommandPalet.tsx
 │   │   │   ├── Header.tsx
 │   │   │   ├── Sidebar-component
 │   │   │   │   ├── Create.tsx
-│   │   │   │   └── Join.tsx
+│   │   │   │   ├── Join.tsx
+│   │   │   │   └── List.tsx
 │   │   │   ├── Sidebar.tsx
 │   │   │   ├── Thread-component
+│   │   │   │   ├── EditMessage.tsx
+│   │   │   │   ├── MessageWrapper.tsx
 │   │   │   │   ├── PostMessages.tsx
 │   │   │   │   └── ViewMessages.tsx
-│   │   │   └── Thread.tsx
+│   │   │   ├── Thread.tsx
+│   │   │   └── commandPalet.txt
 │   │   ├── index.ts
 │   │   └── page.tsx
 │   ├── LP
@@ -50,10 +58,23 @@ src
 │   ├── Register
 │   │   ├── index.ts
 │   │   └── page.tsx
-│   └── Setting
+│   └── Settings
+│       ├── Channel
+│       │   ├── index.ts
+│       │   └── page.tsx
+│       ├── Header
+│       │   ├── DropdownMenu.tsx
+│       │   ├── index.ts
+│       │   └── page.tsx
+│       ├── User
+│       │   ├── index.ts
+│       │   └── page.tsx
+│       ├── Workspace
+│       │   ├── index.ts
+│       │   └── page.tsx
 │       ├── index.ts
 │       └── page.tsx
 └── styles
     └── globals.css
 
-15 directories, 42 files
+20 directories, 58 files

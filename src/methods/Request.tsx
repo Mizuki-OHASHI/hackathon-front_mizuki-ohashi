@@ -1,5 +1,6 @@
-import { MyError } from "@/components/Type";
+import { MyError } from "@/methods/Type";
 import { GetDateTime } from "./Tools";
+import { rejects } from "assert";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
 const ver = process.env.NEXT_PUBLIC_BACK_END_VERSION;
@@ -31,7 +32,8 @@ export const template_Fetch = async (
   }
 };
 
-export const CreateUser = async (userId: string, name: string) => {
+// ------------ CREATE ------------
+export const RequestCreateUser = async (userId: string, name: string) => {
   try {
     const res = await fetch(`${uri}/v${ver}/user`, {
       method: "POST",
@@ -60,11 +62,12 @@ export const CreateUser = async (userId: string, name: string) => {
   }
 };
 
-export const CreateMessage = async (
+export const RequestCreateMessage = async (
   userId: string,
   channelId: string,
   title: string,
-  body: string
+  body: string,
+  updateMessage: () => void
 ) => {
   try {
     const res = await fetch(`${uri}/v${ver}/message`, {
@@ -94,9 +97,210 @@ export const CreateMessage = async (
     }
 
     alert("メッセージの送信に成功しました");
+    updateMessage();
     return;
   } catch (err) {
     alert("サーバーとの接続に失敗しました6");
+    console.error(err);
+    return;
+  }
+};
+
+export const RequestCreateChannel = async (
+  name: string,
+  bio: string,
+  publicPw: string,
+  privatePw: string,
+  workspaceId: string
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/channel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        channel: {
+          name: name,
+          bio: bio,
+          createdat: GetDateTime(),
+          publicpassword: publicPw,
+          privatepassword: privatePw,
+          workspaceid: workspaceId,
+        },
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+    console.log("test", error);
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return;
+    }
+
+    alert("チャンネルの新規登録に成功しました");
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました5");
+    console.error(err);
+    return;
+  }
+};
+
+// ------------ JOIN ------------
+export const RequestJoinChannel = async (
+  userId: string,
+  channelId: string | undefined,
+  password: string,
+  owner: boolean
+) => {
+  if (channelId == undefined) {
+    alert("チャンネルを選択してください");
+    return;
+  }
+  try {
+    const res = await fetch(`${uri}/v${ver}/join`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: userId,
+        direction: "channel",
+        id: channelId,
+        password: password,
+        owner: owner,
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return;
+    }
+
+    alert("チャンネルに参加しました");
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました6");
+    console.error(err);
+    return;
+  }
+};
+
+// ------------ DELETE ------------
+export const RequestDeleteMessage = async (
+  messageId: string,
+  userId: string,
+  updateMessage: () => void
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/message`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: { id: messageId, postedby: userId } }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return;
+    }
+
+    alert("メッセージを削除しました");
+    updateMessage();
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました9");
+    console.error(err);
+    return;
+  }
+};
+
+export const RequestDeleteChannel = async (
+  channelId: string,
+  userId: string,
+  password: string
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/channel`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: { id: channelId, privatepassword: password },
+        userid: userId,
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return;
+    }
+
+    alert("チャンネルを削除しました");
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました11");
+    console.error(err);
+    return;
+  }
+};
+
+// ------------ EDIT ------------
+export const RequestEditMessage = async (
+  messageId: string,
+  title: string,
+  body: string,
+  userId: string,
+  updateMessage: () => void
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/message`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: { id: messageId, title: title, body: body, postedby: userId },
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return;
+    }
+
+    alert("メッセージを編集しました");
+    updateMessage();
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました10");
     console.error(err);
     return;
   }

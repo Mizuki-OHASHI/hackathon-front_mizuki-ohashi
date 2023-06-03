@@ -1,4 +1,4 @@
-import { UserInfo, ChannelInfo } from "@/components/Type";
+import { UserInfo, ChannelInfo, WorkspaceInfo } from "@/methods/Type";
 import { Dispatch, SetStateAction } from "react";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
@@ -97,6 +97,40 @@ export const FetchChannelInfo = async (
     return;
   } catch (err) {
     alert("サーバーとの接続に失敗しました7");
+    console.error(err);
+    return;
+  }
+};
+
+export const FetchWorkspaceInfo = async (
+  workspaceId: string,
+  setWorkspaceInfo: Dispatch<SetStateAction<WorkspaceInfo>>
+) => {
+  if (workspaceId == undefined) {
+    alert("読み込みに失敗しました");
+    return;
+  }
+  try {
+    const res = await fetch(`${uri}/v${ver}/workspace?id=${workspaceId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const workspaceInfo = (await res.json()) as WorkspaceInfo;
+
+    if (workspaceInfo.error.code != 0) {
+      alert(
+        `エラー
+        ${workspaceInfo.error.detail}`
+      );
+    }
+
+    setWorkspaceInfo(workspaceInfo);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました8");
     console.error(err);
     return;
   }

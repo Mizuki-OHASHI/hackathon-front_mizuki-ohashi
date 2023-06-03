@@ -1,4 +1,4 @@
-import { ChannelInfo, EmptyChannelInfo } from "@/components/Type";
+import { ChannelInfo, EmptyChannelInfo, Message } from "@/methods/Type";
 import { FC, useState, useEffect } from "react";
 import { ViewMessages } from "@/pages-component/Home/Home-component/Thread-component/ViewMessages";
 import { PostMessages } from "@/pages-component/Home/Home-component/Thread-component/PostMessages";
@@ -6,18 +6,23 @@ import { FetchChannelInfo } from "@/methods/Fetch";
 import { useRouter } from "next/router";
 import { ConvQueryToString } from "@/methods/Tools";
 
-// type Props = {
-//   userInfo: UserInfo | undefined;
-//   currentState: CurrentState | undefined;
-// };
+type Props = {
+  currentUserId: string;
+};
 
-export const Thread: FC = () => {
+export const Thread: FC<Props> = (props) => {
   const router = useRouter();
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(EmptyChannelInfo);
 
   const { channelid } = router.query;
 
   const channelId = ConvQueryToString(channelid);
+
+  const updateMessage = (): void => {
+    if (channelId != "default") {
+      FetchChannelInfo(channelId, setChannelInfo);
+    }
+  };
 
   useEffect(() => {
     if (channelId != "default") {
@@ -26,13 +31,20 @@ export const Thread: FC = () => {
   }, [channelId]);
 
   if (channelId == "default") {
-    return <div>読み込み中・・・</div>;
+    return <div></div>;
   } else {
     return (
       <div>
-        <div>{channelInfo.channel.name}</div>
-        <ViewMessages messages={channelInfo.messages} />
-        <PostMessages />
+        <div className="text-4xl px-4 py-2">{channelInfo.channel.name}</div>
+        <ViewMessages
+          messages={channelInfo.messages}
+          updateMessage={updateMessage}
+          currentUserId={props.currentUserId}
+        />
+        <PostMessages
+          updateMessage={updateMessage}
+          currentUserId={props.currentUserId}
+        />
       </div>
     );
   }
