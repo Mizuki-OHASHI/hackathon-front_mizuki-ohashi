@@ -14,7 +14,7 @@ export const ViewMessages: FC<Props> = (props) => {
     return <div></div>;
   } else {
     return (
-      <div className="absolute top-[104px] right-2 bottom-[33%] left-[33%] overflow-scroll">
+      <div className="absolute top-[104px] right-2 bottom-[20%] left-[33%] overflow-scroll">
         <div className="pb-72">
           {props.messages.map((m) => {
             if (m.deleted) {

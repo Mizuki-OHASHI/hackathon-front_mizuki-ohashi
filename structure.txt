@@ -1,14 +1,4 @@
 ./src
-├── app
-│   ├── favicon.ico.txt
-│   ├── globals.css.txt
-│   ├── layout.tsx.txt
-│   └── page.tsx.txt
-├── components
-│   ├── Header.txt
-│   ├── Layout.txt
-│   ├── MenuBurger.txt
-│   └── ShowIcon.txt
 ├── methods
 │   ├── Authenticate.tsx
 │   ├── Fetch.tsx

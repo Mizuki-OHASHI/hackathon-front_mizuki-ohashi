@@ -38,8 +38,7 @@ export const FetchUserInfo = async (
   userId: string,
   setUserInfo: Dispatch<SetStateAction<UserInfo>>
 ) => {
-  if (userId == "error") {
-    alert("読み込みに失敗しました2");
+  if (userId == "error" || userId.length != 28) {
     return;
   }
   try {
@@ -72,8 +71,7 @@ export const FetchChannelInfo = async (
   channelId: string,
   setChannelInfo: Dispatch<SetStateAction<ChannelInfo>>
 ) => {
-  if (channelId == undefined) {
-    alert("読み込みに失敗しました");
+  if (channelId == undefined || channelId.length != 26) {
     return;
   }
   try {
@@ -106,8 +104,7 @@ export const FetchWorkspaceInfo = async (
   workspaceId: string,
   setWorkspaceInfo: Dispatch<SetStateAction<WorkspaceInfo>>
 ) => {
-  if (workspaceId == undefined) {
-    alert("読み込みに失敗しました");
+  if (workspaceId == undefined || workspaceId.length != 26) {
     return;
   }
   try {
