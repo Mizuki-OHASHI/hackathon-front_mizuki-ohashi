@@ -1,8 +1,4 @@
-import {
-  CurrentUserId,
-  LogInWithEmail,
-  LogInWithGoogle,
-} from "@/methods/Authenticate";
+import { LogInWithEmail, LogInWithGoogle } from "@/methods/Authenticate";
 import { useRouter } from "next/router";
 import { FC, useState, FormEvent } from "react";
 

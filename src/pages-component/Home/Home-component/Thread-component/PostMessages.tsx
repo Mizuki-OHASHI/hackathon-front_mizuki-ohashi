@@ -1,66 +1,111 @@
 import { FC, FormEvent, useState } from "react";
 import { Parser } from "@/methods/Parser";
-import { CreateMessage } from "@/methods/Request";
-import { CurrentUserId } from "@/methods/Authenticate";
+import { RequestCreateMessage } from "@/methods/Request";
 import { useRouter } from "next/router";
-import { channel } from "diagnostics_channel";
 import { ConvQueryToString } from "@/methods/Tools";
+import { GPT } from "@/methods/gpt";
+import { MailForward, MessageChatbot } from "tabler-icons-react";
 
-// type Props = {
-//   currentState: CurrentState | undefined;
-// };
+type Props = {
+  updateMessage: () => void;
+  currentUserId: string;
+};
 
-export const PostMessages: FC = () => {
+export const PostMessages: FC<Props> = (props) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const router = useRouter();
-  const { workspaceid } = router.query;
   const { channelid } = router.query;
 
   const channelId = ConvQueryToString(channelid);
 
-  const postMessage = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    CreateMessage(CurrentUserId(), channelId, title, body);
+  const makeTitle = () => {
+    GPT(body, setTitle);
+  };
+
+  const postMessage = () => {
+    RequestCreateMessage(
+      props.currentUserId,
+      channelId,
+      title,
+      body,
+      props.updateMessage
+    );
     setBody("");
     setTitle("");
   };
   return (
     <div>
-      <div>
-        <div>プレビュー</div>
-        <div className="border-2 border-blue-200 rounded-lg p-2">
-          <Parser lines={body} />
-        </div>
-      </div>
-      <div>
-        <form onSubmit={(e) => postMessage(e)}>
-          <div>
-            <div>タイトル</div>
-            <div>
+      <div className="absolute bottom-2 right-2 left-[33%]">
+        <form>
+          <div className="flex flex-col border-2 border-blue-200 rounded-lg m-2 bg-blue-50">
+            <div className="p-2 flex flex-law">
+              <div className="w-1/12 my-auto text-gray-500">タイトル</div>
               <input
+                className="w-9/12 outline-none bg-blue-50"
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               ></input>
-            </div>
-            <div>
-              <input type="button" value="タイトルを自動生成"></input>
-            </div>
-          </div>
-          <div>
-            <div>
-              <textarea
-                value={body}
-                onChange={(e) => {
-                  setBody(e.target.value);
+              <button
+                className="w-2/12"
+                type="button"
+                onClick={() => {
+                  if (body != "") {
+                    makeTitle();
+                  }
                 }}
-              ></textarea>
+              >
+                <div className="flex flex-row">
+                  <MessageChatbot
+                    size={32}
+                    color={body == "" ? "gray" : "darkblue"}
+                  />
+                  <div className="my-auto text-sm">タイトルの自動生成</div>
+                </div>
+              </button>
             </div>
-          </div>
-          <div>
+            <div className="border-t-2 border-b-2 border-blue-200 p-2 max-h-72 overflow-scroll">
+              {body == "" ? (
+                <div className="text-gray-500">プレビュー</div>
+              ) : (
+                <Parser lines={body} />
+              )}
+            </div>
             <div>
-              <input type="submit" value="送信"></input>
+              <div className="p-2">
+                <textarea
+                  className="outline-none bg-blue-50 resize-none w-[calc(100%)] h-[2rem] hover:h-[8rem]"
+                  value={body}
+                  onChange={(e) => {
+                    setBody(e.target.value);
+                  }}
+                ></textarea>
+              </div>
+            </div>
+            <div>
+              <div className="flex flex-row-reverse mb-1 mx-6">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (body != "") {
+                      postMessage();
+                    }
+                  }}
+                >
+                  <div
+                    className={`px-1 flex flex-row overflow-auto rounded ${
+                      body != "" ? "hover:bg-blue-300" : ""
+                    }`}
+                  >
+                    <MailForward
+                      size={32}
+                      color={body == "" ? "gray" : "darkblue"}
+                    />
+                    <div className="my-auto mx-2">送信</div>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </form>

@@ -9,7 +9,7 @@ import {
 import { fireAuth } from "@/methods/firebase";
 
 export const CurrentUserId = (): string => {
-  return fireAuth.currentUser?.uid ?? "ユーザの認証に失敗しました";
+  return fireAuth.currentUser?.uid ?? "";
 };
 
 export const LogOut = (): void => {

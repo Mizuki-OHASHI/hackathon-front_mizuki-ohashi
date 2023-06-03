@@ -6,8 +6,8 @@ const arr = [
   { re: /^\s*#\s+/, cn: "text-4xl", id: 0 },
   { re: /^\s*##\s+/, cn: "text-3xl", id: 0 },
   { re: /^\s*###\s+/, cn: "text-2xl", id: 0 },
-  { re: /^\s*-\s+/, cn: "text-xl", id: 1 },
-  { re: /^\s*-{3,}\s*$/, cn: "", id: 2 },
+  { re: /^\s*-\s+/, cn: "text-base list-inside", id: 1 },
+  { re: /^\s*-{3,}\s*$/, cn: "h-0.5 border-none bg-blue-200", id: 2 },
   { re: /^\s*\$\s+/, cn: "", id: 3 },
 ];
 
@@ -40,7 +40,7 @@ export const Parser: FC<Props> = (props) => {
               <li className={`${arr[i].cn}`}>{line.replace(arr[i].re, "")}</li>
             );
           case 2:
-            return <hr />;
+            return <hr className={`${arr[i].cn}`} />;
           case 3:
             return (
               <div key={line}>{renderKaTeX(line.replace(arr[i].re, ""))}</div>

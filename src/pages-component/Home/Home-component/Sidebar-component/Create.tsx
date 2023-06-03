@@ -2,27 +2,34 @@ import { Box, Group, Modal, PasswordInput, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { FC, FormEvent, useState } from "react";
+import { RequestCreateChannel } from "@/methods/Request";
 
-export const CreateChannel: FC = () => {
+type Props = {
+  workspaceId: string;
+};
+export const CreateChannel: FC<Props> = (props) => {
   const [opened, { open, close }] = useDisclosure(false);
 
-  const handleSubmit = (
-    e: FormEvent<HTMLFormElement>,
-    values: typeof form.values
-  ) => {
-    e.preventDefault();
-    // Perform any logic or submit the form here
-    alert("新規作成に成功しました");
+  const handleSubmit = (values: typeof form.values) => {
+    RequestCreateChannel(
+      values.name,
+      values.bio,
+      values.publicPassword,
+      values.privatePassword,
+      props.workspaceId
+    );
+    form.reset();
+    close();
   };
 
   const form = useForm({
     initialValues: {
-      name: "text",
-      privatePassword: "secret",
-      confirmPrivatePassword: "sevret",
-      publicPassword: "secret",
-      confirmPublicPassword: "sevret",
-      bio: "text",
+      name: "",
+      privatePassword: "",
+      confirmPrivatePassword: "",
+      publicPassword: "",
+      confirmPublicPassword: "",
+      bio: "",
     },
 
     // functions will be used to validate values at corresponding key
@@ -42,19 +49,15 @@ export const CreateChannel: FC = () => {
 
   return (
     <div>
-      <button onClick={open}>新規作成</button>
+      <div className="hover:bg-blue-200 px-4 rounded">
+        <button onClick={open}>新規作成</button>
+      </div>
       <Modal opened={opened} onClose={close} title="チャンネルの新規作成">
         <Box maw={300} mx="auto">
-          <form
-            onSubmit={(e) => {
-              form.onSubmit((values) => {
-                handleSubmit(e, values);
-              });
-            }}
-          >
+          <form onSubmit={form.onSubmit(handleSubmit)}>
             <TextInput
               withAsterisk
-              label="名前"
+              label="チャンネル名"
               placeholder=""
               {...form.getInputProps("name")}
             />

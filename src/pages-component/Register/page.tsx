@@ -3,7 +3,7 @@ import {
   LogInWithGoogle,
   RegisterWithEmail,
 } from "@/methods/Authenticate";
-import { CreateUser } from "@/methods/Request";
+import { RequestCreateUser } from "@/methods/Request";
 import { useRouter } from "next/router";
 import { FC, useState, FormEvent } from "react";
 
@@ -22,13 +22,13 @@ export const Register: FC = () => {
   ): void => {
     e.preventDefault();
     RegisterWithEmail(email, password);
-    CreateUser(CurrentUserId(), name);
+    RequestCreateUser(CurrentUserId(), name);
     router.push("/home?workspaceid=default&channelid=default");
   };
 
   const createUserWithGoogle = (name: string): void => {
     LogInWithGoogle();
-    CreateUser(CurrentUserId(), name);
+    RequestCreateUser(CurrentUserId(), name);
     router.push("/home?workspaceid=default&channelid=default");
   };
 
