@@ -8,19 +8,19 @@ export const Login: FC = () => {
 
   const router = useRouter();
 
-  const loadHomeWithEmailAndPassword = (
+  const loadHomeWithEmailAndPassword = async (
     e: FormEvent<HTMLFormElement>,
     email: string,
     password: string
-  ): void => {
+  ) => {
     e.preventDefault();
-    if (LogInWithEmail(email, password)) {
+    if (await LogInWithEmail(email, password)) {
       router.push("/home?workspaceid=default&channelid=default");
     }
   };
 
-  const loadHomeWithGoogle = (): void => {
-    if (LogInWithGoogle()) {
+  const loadHomeWithGoogle = async () => {
+    if (await LogInWithGoogle()) {
       router.push("/home?workspaceid=default&channelid=default");
     }
   };

@@ -50,15 +50,15 @@ export const RequestCreateUser = async (userId: string, name: string) => {
         `エラー
         ${error.detail}`
       );
-      return;
+      return false;
     }
 
     alert("ユーザーの新規登録に成功しました");
-    return;
+    return true;
   } catch (err) {
     alert("サーバーとの接続に失敗しました5");
     console.error(err);
-    return;
+    return false;
   }
 };
 
@@ -145,7 +145,7 @@ export const RequestCreateChannel = async (
     alert("チャンネルの新規登録に成功しました");
     return;
   } catch (err) {
-    alert("サーバーとの接続に失敗しました5");
+    alert("サーバーとの接続に失敗しました5c");
     console.error(err);
     return;
   }

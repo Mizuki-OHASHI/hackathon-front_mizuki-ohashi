@@ -56,12 +56,12 @@ export const PostMessages: FC<Props> = (props) => {
                   }
                 }}
               >
-                <div className="flex flex-row">
+                <div className="flex flex-row-reverse px-2">
+                  <div className="my-auto text-sm">自動生成</div>
                   <MessageChatbot
                     size={32}
                     color={body == "" ? "gray" : "darkblue"}
                   />
-                  <div className="my-auto text-sm">タイトルの自動生成</div>
                 </div>
               </button>
             </div>
@@ -73,7 +73,7 @@ export const PostMessages: FC<Props> = (props) => {
               )}
             </div>
             <div>
-              <div className="p-2">
+              <div className="px-2 pt-2">
                 <textarea
                   className="outline-none bg-blue-50 resize-none w-[calc(100%)] h-[2rem] hover:h-[8rem]"
                   value={body}
