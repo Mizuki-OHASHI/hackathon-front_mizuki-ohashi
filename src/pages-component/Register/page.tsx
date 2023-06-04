@@ -14,22 +14,26 @@ export const Register: FC = () => {
 
   const router = useRouter();
 
-  const createUserWithEmailAndPassword = (
+  const createUserWithEmailAndPassword = async (
     e: FormEvent<HTMLFormElement>,
     name: string,
     email: string,
     password: string
-  ): void => {
+  ) => {
     e.preventDefault();
-    RegisterWithEmail(email, password);
-    RequestCreateUser(CurrentUserId(), name);
-    router.push("/home?workspaceid=default&channelid=default");
+    if (await RegisterWithEmail(email, password)) {
+      if (await RequestCreateUser(CurrentUserId(), name)) {
+        router.push("/home?workspaceid=default&channelid=default");
+      }
+    }
   };
 
-  const createUserWithGoogle = (name: string): void => {
-    LogInWithGoogle();
-    RequestCreateUser(CurrentUserId(), name);
-    router.push("/home?workspaceid=default&channelid=default");
+  const createUserWithGoogle = async (name: string) => {
+    if (await LogInWithGoogle()) {
+      if (await RequestCreateUser(CurrentUserId(), name)) {
+        router.push("/home?workspaceid=default&channelid=default");
+      }
+    }
   };
 
   return (

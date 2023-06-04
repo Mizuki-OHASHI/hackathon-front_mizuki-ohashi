@@ -63,7 +63,7 @@ export const CreateChannel: FC<Props> = (props) => {
             />
             <PasswordInput
               withAsterisk
-              label="管理者用パスワード"
+              label="管理者用パスワード（変更不可）"
               placeholder=""
               {...form.getInputProps("privatePassword")}
             />
@@ -75,13 +75,13 @@ export const CreateChannel: FC<Props> = (props) => {
             />
             <PasswordInput
               withAsterisk
-              label="公開用パスワード"
+              label="公開用パスワード（変更可）"
               placeholder=""
               {...form.getInputProps("publicPassword")}
             />
             <PasswordInput
               withAsterisk
-              label="管理者用パスワード（確認）"
+              label="公開用パスワード（確認）"
               placeholder=""
               {...form.getInputProps("confirmPublicPassword")}
             />
