@@ -65,6 +65,7 @@ export const RequestCreateUser = async (userId: string, name: string) => {
 export const RequestCreateMessage = async (
   userId: string,
   channelId: string,
+  replyTo: string,
   title: string,
   body: string,
   updateMessage: () => void
@@ -80,6 +81,7 @@ export const RequestCreateMessage = async (
           postedby: userId,
           postedat: GetDateTime(),
           channelid: channelId,
+          replyto: replyTo,
           title: title,
           body: body,
         },

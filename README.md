@@ -1,34 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# フロントエンドについて
 
-## Getting Started
+## 使用したフレーム・ライブラリほか
 
-First, run the development server:
+- **Next.js**
+- Firebase
+- TailwindCSS
+- Mantine
+- Katex
+- Tabler Icons
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## ディレクトリ構造
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    /src
+    ├── methods  # ロジカルな処理や, バックエンドとのやり取りを行うメソッド
+    │   ├── Authenticate.tsx  # 認証.
+    │   ├── Fetch.tsx  # BEから情報を受け取る.
+    │   ├── Parser.tsx  # マークダウンのような形で入力されたテキストデータを綺麗に表示する.
+    │   │                 こだわりポイントのひとつ. KaTeX を用いて数式の表示も可能!
+    │   ├── Request.tsx  # BEにリクエストを送る.
+    │   ├── ShortCut.txt  # ショートカットコマンドにも対応したい (未実装).
+    │   ├── Tools.tsx  # 時刻のフォーマットの変更などの便利なメソッドたち.
+    │   ├── Type.tsx  # BEから受け取る JSON の型を指定.
+    │   ├── firebase.ts  # 認証.
+    │   └── gpt.ts  # GPTとの接続 (本当は BE でやるべきらしい)
+    ├── pages
+    │   ├── _app.tsx
+    │   ├── _document.tsx
+    │   ├── home.tsx
+    │   ├── index.tsx
+    │   ├── index_.txt
+    │   ├── login.tsx
+    │   ├── register.tsx
+    │   ├── settings
+    │   │   ├── channel.tsx
+    │   │   └── user.tsx
+    │   └── settings.tsx
+    ├── pages-component  # 表示するためのメソッド
+    │   ├── Home
+    │   │   ├── Home-component
+    │   │   │   ├── Header.tsx
+    │   │   │   ├── Sidebar-component
+    │   │   │   │   ├── Create.tsx
+    │   │   │   │   ├── Join.tsx
+    │   │   │   │   └── List.tsx
+    │   │   │   ├── Sidebar.tsx
+    │   │   │   ├── Thread-component
+    │   │   │   │   ├── EditMessage.tsx
+    │   │   │   │   ├── MessageWrapper.tsx
+    │   │   │   │   ├── PostMessages.tsx
+    │   │   │   │   └── ViewMessages.tsx
+    │   │   │   ├── Thread.tsx
+    │   │   │   └── commandPalet.txt  # コマンドによる操作を実現したい (未実装).
+    │   │   ├── index.ts
+    │   │   └── page.tsx
+    │   ├── LP  # CSS未実装
+    │   │   ├── index.ts
+    │   │   └── page.tsx
+    │   ├── Login  # CSS未実装
+    │   │   ├── index.ts
+    │   │   └── page.tsx
+    │   ├── Register  # CSS未実装
+    │   │   ├── index.ts
+    │   │   └── page.tsx
+    │   └── Settings  # ほぼ未実装
+    │       ├── Channel
+    │       │   ├── index.ts
+    │       │   └── page.tsx
+    │       ├── Header
+    │       │   ├── DropdownMenu.tsx
+    │       │   ├── index.ts
+    │       │   └── page.tsx
+    │       ├── User
+    │       │   ├── index.ts
+    │       │   └── page.tsx
+    │       ├── Workspace
+    │       │   ├── index.ts
+    │       │   └── page.tsx
+    │       ├── index.ts
+    │       └── page.tsx
+    └── styles
+        └── globals.css

@@ -1,4 +1,4 @@
-./src
+/src
 ├── methods
 │   ├── Authenticate.tsx
 │   ├── Fetch.tsx

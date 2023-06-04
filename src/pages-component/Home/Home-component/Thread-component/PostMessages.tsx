@@ -27,6 +27,7 @@ export const PostMessages: FC<Props> = (props) => {
     RequestCreateMessage(
       props.currentUserId,
       channelId,
+      "ROOT",
       title,
       body,
       props.updateMessage
