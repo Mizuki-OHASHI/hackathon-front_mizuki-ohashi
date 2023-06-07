@@ -5,6 +5,7 @@ type MenuElement = {
   label: string;
   path: string;
   icon: ReactElement;
+  isRed?: boolean;
 };
 
 type MenuProps = {
@@ -38,6 +39,7 @@ export const DropdownMenus: FC<MenuProps> = (props) => {
                 props.setPath(el.path);
               }}
               icon={el.icon}
+              className={el.isRed ? "text-red-500" : ""}
             >
               {el.label}
             </Menu.Item>

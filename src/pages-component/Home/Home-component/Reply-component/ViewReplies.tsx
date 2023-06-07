@@ -1,22 +1,24 @@
-import { Message } from "@/methods/Type";
+import { Reply } from "@/methods/Type";
 
 import { FC } from "react";
-import { MessageWrapper } from "@/pages-component/Home/Home-component/Thread-component/MessageWrapper";
+import { ReplyWrapper } from "@/pages-component/Home/Home-component/Reply-component/ReplyWrapper";
 
 type Props = {
-  messages: Array<Message>;
+  replies: Array<Reply>;
   currentUserId: string;
-  updateMessage: () => void;
+  updateReply: () => void;
 };
 
-export const ViewMessages: FC<Props> = (props) => {
-  if (props.messages == null) {
+export const ViewReplies: FC<Props> = (props) => {
+  console.log("replys", props.replies);
+
+  if (props.replies == null) {
     return <div></div>;
   } else {
     return (
       <div className="w-full absolute top-14 bottom-12 left-0 right-0 p-2 overflow-scroll">
-        <div className="pb-[50vh]">
-          {props.messages.map((m) => {
+        <div className="pb-72">
+          {props.replies.map((m) => {
             if (m.deleted) {
               return (
                 <div
@@ -28,10 +30,10 @@ export const ViewMessages: FC<Props> = (props) => {
               );
             }
             return (
-              <MessageWrapper
+              <ReplyWrapper
                 key={m.id}
-                updateMessage={props.updateMessage}
-                message={m}
+                updateReply={props.updateReply}
+                reply={m}
                 currentUserId={props.currentUserId}
               />
             );

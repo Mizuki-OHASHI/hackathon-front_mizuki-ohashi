@@ -1,77 +1,63 @@
-import { Message } from "@/methods/Type";
+import { Reply } from "@/methods/Type";
 import { Parser } from "@/methods/Parser";
-import { RequestDeleteMessage } from "@/methods/RequestDelete";
+import { RequestDeleteReply } from "@/methods/RequestDelete";
 import { ConvDateTime, ConvQueryToString } from "@/methods/Tools";
 import { FC, useState } from "react";
 import { Menu } from "@mantine/core";
-import { DotsVertical, Messages, Edit, Trash } from "tabler-icons-react";
-import { EditMessages } from "@/pages-component/Home/Home-component/Thread-component/EditMessage";
+import { DotsVertical, Edit, Messages, Trash } from "tabler-icons-react";
+import { EditReplies } from "@/pages-component/Home/Home-component/Reply-component/EditReply";
 import { useRouter } from "next/router";
-import { ShowIcon } from "@/methods/ShowIcon";
 
 type Props = {
-  updateMessage: () => void;
-  message: Message;
+  updateReply: () => void;
+  reply: Reply;
   currentUserId: string;
 };
 
-export const MessageWrapper: FC<Props> = (props) => {
+export const ReplyWrapper: FC<Props> = (props) => {
   const [onEdit, setOnEdit] = useState(false);
   const router = useRouter();
   return onEdit ? (
-    <EditMessages
-      updateMessage={props.updateMessage}
+    <EditReplies
+      updateReply={props.updateReply}
       currentUserId={props.currentUserId}
-      message={props.message}
+      reply={props.reply}
       closeEditor={() => {
         setOnEdit(false);
       }}
     />
   ) : (
     <div
-      key={props.message.id}
-      className="flex flex-col border-2 border-blue-200 rounded-lg m-2"
+      key={props.reply.id}
+      className="flex flex-col border-2 border-blue-200 rounded-lg m-2 bg-blue-50"
     >
       <div>
-        <div className="flex flex-law relative">
-          <div className="my-auto mx-2">
-            <ShowIcon
-              iconId={props.message.icon}
-              iconSize={32}
-              onClick={() => {}}
-            />
-          </div>
-          <div className="px-4 py-2 border-r-2 border-blue-200">
-            {props.message.name}
-          </div>
-          <div className="p-2 whitespace-nowrap overflow-x-scroll">
-            {props.message.title}
-          </div>
-          <div className="absolute right-12 my-2 w-30 pl-2 bg-white">
-            {ConvDateTime(props.message.postedat)}
-          </div>
+        <div className="flex flex-law">
+          <div className="m-2">{props.reply.name}</div>
+          <div className="m-2">{props.reply.title}</div>
+          <div className="m-2">{ConvDateTime(props.reply.postedat)}</div>
           <Menu trigger="hover" shadow="md" width={200}>
             <Menu.Target>
-              <button className="mt-1 pl-2 pr-3 py-2 absolute right-0 bg-white">
-                <DotsVertical size={20} color="darkblue" />
+              <button>
+                <DotsVertical size={16} />
               </button>
             </Menu.Target>
 
             <Menu.Dropdown>
               <Menu.Label>閲覧者メニュー</Menu.Label>
-              <Menu.Item
+              {/* <Menu.Item
                 onClick={() => {
                   const { workspaceid, channelid } = router.query;
                   router.push(
-                    `/home?workspaceid=${workspaceid}&channelid=${channelid}&messageid=${props.message.id}`
+                    `/home?workspaceid=${workspaceid}&channelid=${channelid}&replyid=${props.reply.id}`
                   );
                 }}
                 icon={<Messages size={16} />}
               >
                 返信する
-              </Menu.Item>
+              </Menu.Item> */}
 
-              {props.message.postedby == props.currentUserId ? (
+              {props.reply.postedby == props.currentUserId ? (
                 <>
                   <Menu.Divider />
 
@@ -87,11 +73,11 @@ export const MessageWrapper: FC<Props> = (props) => {
                   <Menu.Item
                     onClick={() => {
                       if (confirm("削除しますか？")) {
-                        console.log(props.message.id);
-                        RequestDeleteMessage(
-                          props.message.id,
+                        console.log(props.reply.id);
+                        RequestDeleteReply(
+                          props.reply.id,
                           props.currentUserId,
-                          props.updateMessage
+                          props.updateReply
                         );
                       }
                     }}
@@ -108,12 +94,12 @@ export const MessageWrapper: FC<Props> = (props) => {
       </div>
       <div className="border-t-2 border-blue-200 p-2">
         <div>
-          <Parser lines={props.message.body} />
+          <Parser lines={props.reply.body} />
         </div>
       </div>
       <div className="flex flex-row-reverse">
         <div className="text-gray-500 mx-4">
-          {props.message.edited ? "編集済み" : ""}
+          {props.reply.edited ? "編集済み" : ""}
         </div>
       </div>
     </div>

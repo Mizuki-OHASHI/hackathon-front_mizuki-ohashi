@@ -15,13 +15,13 @@ export const Login: FC = () => {
   ) => {
     e.preventDefault();
     if (await LogInWithEmail(email, password)) {
-      router.push("/home?workspaceid=default&channelid=default");
+      router.push("/home");
     }
   };
 
   const loadHomeWithGoogle = async () => {
     if (await LogInWithGoogle()) {
-      router.push("/home?workspaceid=default&channelid=default");
+      router.push("/home");
     }
   };
 

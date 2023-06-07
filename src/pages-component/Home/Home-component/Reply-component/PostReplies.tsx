@@ -1,35 +1,35 @@
 import { FC, FormEvent, useState } from "react";
 import { Parser } from "@/methods/Parser";
-import { RequestCreateMessage } from "@/methods/RequestCreate";
+import { RequestCreateReply } from "@/methods/RequestCreate";
 import { useRouter } from "next/router";
 import { ConvQueryToString } from "@/methods/Tools";
 import { GPT } from "@/methods/gpt";
 import { MailForward, MessageChatbot } from "tabler-icons-react";
 
 type Props = {
-  updateMessage: () => void;
+  updateReply: () => void;
   currentUserId: string;
 };
 
-export const PostMessages: FC<Props> = (props) => {
+export const PostReplies: FC<Props> = (props) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const router = useRouter();
-  const { channelid } = router.query;
+  const { messageid } = router.query;
 
-  const channelId = ConvQueryToString(channelid);
+  const messageId = ConvQueryToString(messageid);
 
   const makeTitle = () => {
     GPT(body, setTitle);
   };
 
-  const postMessage = () => {
-    RequestCreateMessage(
+  const postReply = () => {
+    RequestCreateReply(
       props.currentUserId,
-      channelId,
+      messageId,
       title,
       body,
-      props.updateMessage
+      props.updateReply
     );
     setBody("");
     setTitle("");
@@ -38,11 +38,11 @@ export const PostMessages: FC<Props> = (props) => {
     <div>
       <div className="w-full absolute bottom-0 left-0 right-0 p-2 overflow-scroll">
         <form>
-          <div className="flex flex-col border-2 border-blue-200 rounded-lg m-2 bg-blue-50">
+          <div className="flex flex-col border-2 border-blue-200 rounded-lg m-2 bg-white">
             <div className="p-2 flex flex-law">
               <div className="w-1/12 my-auto text-gray-500">タイトル</div>
               <input
-                className="w-9/12 outline-none bg-blue-50"
+                className="w-9/12 outline-none bg-white"
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -75,7 +75,7 @@ export const PostMessages: FC<Props> = (props) => {
             <div>
               <div className="px-2 pt-2">
                 <textarea
-                  className="outline-none bg-blue-50 resize-none w-[calc(100%)] h-[2rem] hover:h-[8rem]"
+                  className="outline-none bg-white resize-none w-[calc(100%)] h-[2rem] hover:h-[8rem]"
                   value={body}
                   onChange={(e) => {
                     setBody(e.target.value);
@@ -89,7 +89,7 @@ export const PostMessages: FC<Props> = (props) => {
                   type="button"
                   onClick={() => {
                     if (body != "") {
-                      postMessage();
+                      postReply();
                     }
                   }}
                 >

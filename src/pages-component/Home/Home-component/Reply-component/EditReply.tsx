@@ -1,27 +1,27 @@
 import { FC, useState } from "react";
 import { Parser } from "@/methods/Parser";
-import { RequestEditMessage } from "@/methods/RequestEdit";
+import { RequestEditReply } from "@/methods/RequestEdit";
 import { ArrowBarToDown, CircleOff } from "tabler-icons-react";
-import { Message } from "@/methods/Type";
+import { Reply } from "@/methods/Type";
 
 type Props = {
-  updateMessage: () => void;
-  message: Message;
+  updateReply: () => void;
+  reply: Reply;
   currentUserId: string;
   closeEditor: () => void;
 };
 
-export const EditMessages: FC<Props> = (props) => {
-  const [title, setTitle] = useState(props.message.title);
-  const [body, setBody] = useState(props.message.body);
+export const EditReplies: FC<Props> = (props) => {
+  const [title, setTitle] = useState(props.reply.title);
+  const [body, setBody] = useState(props.reply.body);
 
-  const editMessage = () => {
-    RequestEditMessage(
-      props.message.id,
+  const editReply = () => {
+    RequestEditReply(
+      props.reply.id,
       title,
       body,
       props.currentUserId,
-      props.updateMessage
+      props.updateReply
     );
     props.closeEditor();
   };
@@ -61,7 +61,7 @@ export const EditMessages: FC<Props> = (props) => {
               type="button"
               onClick={() => {
                 if (confirm("保存しますか？")) {
-                  editMessage();
+                  editReply();
                 }
               }}
             >
