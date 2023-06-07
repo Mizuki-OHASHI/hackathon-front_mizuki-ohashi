@@ -1,20 +1,26 @@
 import { UserInfo, Workspace } from "@/methods/Type";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { CreateChannel } from "@/pages-component/Home/Home-component/Sidebar-component/Create";
-import { JoinChannel } from "@/pages-component/Home/Home-component/Sidebar-component/Join";
+import {
+  CreateChannel,
+  CreateWorkspace,
+} from "@/pages-component/Home/Home-component/Sidebar-component/Create";
+import {
+  JoinChannel,
+  JoinWorkspace,
+} from "@/pages-component/Home/Home-component/Sidebar-component/Join";
 import { ListChannels } from "./Sidebar-component/List";
 import { ConvQueryToString } from "@/methods/Tools";
 
 type Props = {
   userInfo: UserInfo;
   currentUserId: string;
+  updateUserInfo: () => void;
 };
 
 export const Sidebar: FC<Props> = (props) => {
   const router = useRouter();
-  const { workspaceid } = router.query;
-  const { channelid } = router.query;
+  const { workspaceid, channelid } = router.query;
 
   console.log(props.userInfo);
 
@@ -26,11 +32,16 @@ export const Sidebar: FC<Props> = (props) => {
         <div>
           {workspaces.map((w) => {
             return (
-              <div key={w.id}>
+              <div
+                key={w.id}
+                className={`flex flex-row rounded ${
+                  w.id == workspaceid ? "bg-blue-200" : ""
+                } hover:bg-blue-100`}
+              >
                 <button
-                  className={w.id == workspaceid ? "bg-blue-100" : ""}
+                  className="w-full text-left text-lg px-2 whitespace-nowrap overflow-x-scroll"
                   onClick={() => {
-                    router.push(`/home?workspaceid=${w.id}&channelid=default`);
+                    router.push(`/home?workspaceid=${w.id}`);
                   }}
                 >
                   {w.name}
@@ -48,8 +59,15 @@ export const Sidebar: FC<Props> = (props) => {
       <div className="w-6/12 h-[calc(100vh-4rem)] m-1 p-1 rounded bg-blue-50">
         <div className="text-xl text-center">ワークスペース</div>
         <div className="my-1 py-1 border-t border-b border-blue-300">
-          <div className="bg-blue-50">参加</div>
-          <div>新規作成</div>
+          <JoinWorkspace
+            joinedWorkspaces={props.userInfo.workspaces}
+            currentUserId={props.currentUserId}
+            updateUserInfo={props.updateUserInfo}
+          />
+          <CreateWorkspace
+            currentUserId={props.currentUserId}
+            updateUserInfo={props.updateUserInfo}
+          />
         </div>
         <div className="overflow-scroll">
           {listWorkspaces(props.userInfo.workspaces)}
@@ -62,8 +80,13 @@ export const Sidebar: FC<Props> = (props) => {
             channels={props.userInfo.channels}
             currentUserId={props.currentUserId}
             workspaceId={ConvQueryToString(workspaceid)}
+            updateUserInfo={props.updateUserInfo}
           />
-          <CreateChannel workspaceId={ConvQueryToString(workspaceid)} />
+          <CreateChannel
+            workspaceId={ConvQueryToString(workspaceid)}
+            currentUserId={props.currentUserId}
+            updateUserInfo={props.updateUserInfo}
+          />
         </div>
         <ListChannels
           channels={props.userInfo.channels}
@@ -74,35 +97,3 @@ export const Sidebar: FC<Props> = (props) => {
     </div>
   );
 };
-
-// const listChannels: FC<Array<Channel>> = (channels) => {
-//   const { workspaceid } = router.query;
-
-//   if (channels == null) {
-//     return <></>;
-//   } else {
-//     return (
-//       <div>
-//         {channels.map((c) => {
-//           if (workspaceid == c.WorkspaceId) {
-//             return (
-//               <div key={c.id}>
-//                 <button
-//                   onClick={() => {
-//                     router.push(
-//                       `/home?workspaceid=${workspaceid}&channelid=${c.id}`
-//                     );
-//                   }}
-//                 >
-//                   {c.name}
-//                 </button>
-//               </div>
-//             );
-//           } else {
-//             return <></>;
-//           }
-//         })}
-//       </div>
-//     );
-//   }
-// };

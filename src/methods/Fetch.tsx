@@ -1,38 +1,14 @@
-import { UserInfo, ChannelInfo, WorkspaceInfo } from "@/methods/Type";
+import {
+  UserInfo,
+  ChannelInfo,
+  WorkspaceInfo,
+  MessageInfo,
+  Workspaces,
+} from "@/methods/Type";
 import { Dispatch, SetStateAction } from "react";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
 const ver = process.env.NEXT_PUBLIC_BACK_END_VERSION;
-
-export const Fetch = async (
-  api: string,
-  method: string,
-  dict: any
-): Promise<any> => {
-  try {
-    const res = await fetch(`${uri}/v${ver}/${api}`, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ dict }),
-    });
-
-    const userInfo = (await res.json()) as UserInfo;
-
-    if (userInfo.error.code != 0) {
-      alert(
-        `エラー
-        ${userInfo.error.detail}`
-      );
-    }
-    return userInfo;
-  } catch (err) {
-    alert("サーバーとの接続に失敗しました1");
-    console.error(err);
-    return;
-  }
-};
 
 export const FetchUserInfo = async (
   userId: string,
@@ -128,6 +104,69 @@ export const FetchWorkspaceInfo = async (
     return;
   } catch (err) {
     alert("サーバーとの接続に失敗しました8");
+    console.error(err);
+    return;
+  }
+};
+
+export const FetchMessageInfo = async (
+  messageId: string,
+  setMessageInfo: Dispatch<SetStateAction<MessageInfo>>
+) => {
+  if (messageId == undefined || messageId.length != 26) {
+    return;
+  }
+  try {
+    const res = await fetch(`${uri}/v${ver}/message?id=${messageId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const messageInfo = (await res.json()) as MessageInfo;
+
+    if (messageInfo.error.code != 0) {
+      alert(
+        `エラー
+        ${messageInfo.error.detail}`
+      );
+    }
+
+    setMessageInfo(messageInfo);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました7");
+    console.error(err);
+    return;
+  }
+};
+
+export const FetchAllWorkspaces = async (
+  setWorkspaces: Dispatch<SetStateAction<Workspaces>>
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/join`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const workspaces = (await res.json()) as Workspaces;
+    console.log(workspaces);
+
+    if (workspaces.error.code != 0) {
+      alert(
+        `エラー
+        ${workspaces.error.detail}`
+      );
+    }
+
+    setWorkspaces(workspaces);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました7w");
     console.error(err);
     return;
   }

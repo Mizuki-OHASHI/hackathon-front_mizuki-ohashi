@@ -8,9 +8,11 @@ import {
   Logout,
   Settings,
   Home,
+  Trash,
 } from "tabler-icons-react";
 import { LogOut } from "@/methods/Authenticate";
 import { useRouter } from "next/router";
+import { ShowIcon } from "@/methods/ShowIcon";
 
 type Props = {
   userInfo: UserInfo;
@@ -23,30 +25,36 @@ export const SettingsHeader: FC<Props> = (props) => {
   const userMenus = [
     {
       label: "ユーザー情報照会",
-      path: `/user?type=refer`,
+      path: `/user`,
       icon: <InfoCircle size={16} />,
     },
     {
       label: "ユーザー情報編集",
-      path: `/user?type=edit`,
+      path: `/user?option=edit`,
       icon: <EditCircle size={16} />,
+    },
+    {
+      label: "アカウント削除",
+      path: `/user?option=delete`,
+      icon: <Trash size={16} color="red" />,
+      isRed: true,
     },
   ];
 
   const channelMenus = [
     {
       label: "チャンネル情報照会",
-      path: "/channel?type=refer",
+      path: "/channel",
       icon: <InfoCircle size={16} />,
     },
     {
       label: "チャンネル情報編集",
-      path: "/channel?type=edit",
+      path: "/channel?option=edit",
       icon: <EditCircle size={16} />,
     },
     {
       label: "公開パスワード変更",
-      path: "/channel?type=password",
+      path: "/channel?option=password",
       icon: <BrandSamsungpass size={16} />,
     },
   ];
@@ -54,17 +62,17 @@ export const SettingsHeader: FC<Props> = (props) => {
   const workspaceMenus = [
     {
       label: "ワークスペース情報照会",
-      path: "/workspace?type=refer",
+      path: "/workspace",
       icon: <InfoCircle size={16} />,
     },
     {
       label: "ワークスペース情報編集",
-      path: "/workspace?type=edit",
+      path: "/workspace?option=edit",
       icon: <EditCircle size={16} />,
     },
     {
       label: "公開パスワード変更",
-      path: "/workspace?type=password",
+      path: "/workspace?option=password",
       icon: <BrandSamsungpass size={16} />,
     },
   ];
@@ -132,11 +140,18 @@ export const SettingsHeader: FC<Props> = (props) => {
           </div>
           <div className="h-12">
             <button
-              className="h-12"
+              className="h-12 flex flex-row items-center hover:bg-blue-800"
               onClick={() => {
-                router.push(`/settings/user?userid=${props.currentUserId}`);
+                router.push(`/settings/user`);
               }}
             >
+              <div className="my-auto mx-2">
+                <ShowIcon
+                  iconId={props.userInfo.user.img}
+                  iconSize={32}
+                  onClick={() => {}}
+                />
+              </div>
               <div className="px-2 text-xl text-white py-auto">
                 {props.userInfo.user.name}
               </div>

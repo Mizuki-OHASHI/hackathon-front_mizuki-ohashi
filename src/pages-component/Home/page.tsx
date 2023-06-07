@@ -7,8 +7,6 @@ import { FetchUserInfo } from "@/methods/Fetch";
 import { EmptyUserInfo, UserInfo } from "@/methods/Type";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "@/methods/firebase";
-import { Rnd } from "react-rnd";
-import { headers } from "next/dist/client/components/headers";
 
 export const Home: FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>(EmptyUserInfo);
@@ -24,16 +22,24 @@ export const Home: FC = () => {
     FetchUserInfo(currentUserId, setUserInfo);
   }, [currentUserId]);
 
+  const updateUserInfo = () => {
+    FetchUserInfo(currentUserId, setUserInfo);
+  };
+
   return (
-    <div className="flex flex-col w-screen h-screen">
-      <div className="h-12 bg-blue-900 text-white">
+    <div className="flex flex-col">
+      <div className="fixed top-0 left-0 right-0 h-12 bg-blue-900 text-white">
         <Header user={userInfo.user} currentUserId={currentUserId} />
       </div>
-      <div className="flex flex-law">
-        <div className="w-4/12">
-          <Sidebar userInfo={userInfo} currentUserId={currentUserId} />
+      <div className="fixed top-12 left-0 right-0 bottom-0 flex flex-law">
+        <div className="h-full w-4/12 relative">
+          <Sidebar
+            userInfo={userInfo}
+            currentUserId={currentUserId}
+            updateUserInfo={updateUserInfo}
+          />
         </div>
-        <div className="w-8/12 h-[calc(100vh-12rem)]">
+        <div className="h-full w-8/12 relative">
           <Thread currentUserId={currentUserId} />
         </div>
       </div>

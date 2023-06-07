@@ -65,7 +65,34 @@ export type Message = {
   postedat: string;
   postedby: string;
   name: string;
+  icon: string;
   channelId: string;
+  edited: boolean;
+  deleted: boolean;
+};
+
+export const EmptyMessage = {
+  id: "",
+  title: "",
+  body: "",
+  postedat: "",
+  postedby: "",
+  name: "",
+  icon: "",
+  channelId: "",
+  edited: false,
+  deleted: false,
+};
+
+export type Reply = {
+  id: string;
+  title: string;
+  body: string;
+  postedat: string;
+  postedby: string;
+  name: string;
+  icon: string;
+  replyto: string;
   edited: boolean;
   deleted: boolean;
 };
@@ -121,6 +148,29 @@ export const EmptyWorkspaceInfo: WorkspaceInfo = {
   workspace: EmptyWorkspace,
   members: [],
   channels: [],
+  error: EmptyError,
+};
+
+export type MessageInfo = {
+  root: Message;
+  replies: Array<Reply>;
+  error: MyError;
+};
+
+export const EmptyMessageInfo: MessageInfo = {
+  root: EmptyMessage,
+  replies: [],
+  error: EmptyError,
+};
+
+// ------------ JOIN ------------
+export type Workspaces = {
+  list: Array<Workspace>;
+  error: MyError;
+};
+
+export const EmptyWorkspaces = {
+  list: [],
   error: EmptyError,
 };
 
