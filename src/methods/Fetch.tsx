@@ -5,6 +5,7 @@ import {
   MessageInfo,
   Workspaces,
   UserStatistics,
+  ChannelStatistics,
 } from "@/methods/Type";
 import { Dispatch, SetStateAction } from "react";
 
@@ -200,6 +201,44 @@ export const FetchUserStatistics = async (
     console.log(us);
 
     setUserStatistics(us);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました1s");
+    console.error(err);
+    return;
+  }
+};
+
+export const FetchChannelStatistics = async (
+  channelId: string,
+  setChannelStatistics: Dispatch<SetStateAction<ChannelStatistics>>
+) => {
+  if (channelId == undefined || channelId.length != 26) {
+    return;
+  }
+  try {
+    const res = await fetch(
+      `${uri}/v${ver}/statistics?type=channel&id=${channelId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const us = (await res.json()) as ChannelStatistics;
+    console.log(us);
+
+    if (us.error.code != 0) {
+      alert(
+        `エラー
+        ${us.error.detail}`
+      );
+    }
+    console.log(us);
+
+    setChannelStatistics(us);
     return;
   } catch (err) {
     alert("サーバーとの接続に失敗しました1s");

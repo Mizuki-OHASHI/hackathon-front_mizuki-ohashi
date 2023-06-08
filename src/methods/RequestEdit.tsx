@@ -117,3 +117,48 @@ export const RequestEditUser = async (
     return false;
   }
 };
+
+export const RequestEditChannel = async (
+  userId: string,
+  channelId: string,
+  name: string,
+  bio: string,
+  publicPw: string,
+  privatePw: string
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/channel`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: userId,
+        channel: {
+          id: channelId,
+          name: name,
+          bio: bio,
+          publicpassword: publicPw,
+          privatepassword: privatePw,
+        },
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return false;
+    }
+
+    alert("チャンネル情報を編集しました");
+    return true;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました10c");
+    console.error(err);
+    return false;
+  }
+};

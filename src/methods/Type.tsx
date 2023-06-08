@@ -5,6 +5,7 @@ export type User = {
   deleted: boolean;
   bio: string;
   img: string;
+  flag: boolean;
 };
 
 export const EmptyUser: User = {
@@ -13,6 +14,7 @@ export const EmptyUser: User = {
   deleted: false,
   bio: "",
   img: "",
+  flag: false,
 };
 
 // ------------ CHANNEL ------------
@@ -21,11 +23,11 @@ export type Channel = {
   name: string;
   createdAt: string;
   bio: string;
-  PublicPw: string;
-  PrivatePw: string;
-  Deleted: boolean;
+  publicPw: string;
+  privatePw: string;
+  deleted: boolean;
   workspaceid: string;
-  Flag: boolean;
+  flag: boolean;
 };
 
 export const EmptyChannel = {
@@ -33,28 +35,36 @@ export const EmptyChannel = {
   name: "",
   createdAt: "",
   bio: "",
-  PublicPw: "",
-  PrivatePw: "",
-  Deleted: false,
+  publicPw: "",
+  privatePw: "",
+  deleted: false,
   workspaceid: "",
-  Flag: false,
+  flag: false,
 };
 
 // ------------ WORKSPACE ------------
 export type Workspace = {
   id: string;
   name: string;
-  deleted: boolean;
+  createdAt: string;
   bio: string;
+  publicPw: string;
+  privatePw: string;
+  deleted: boolean;
   img: string;
+  flag: boolean;
 };
 
 export const EmptyWorkspace: Workspace = {
   id: "",
   name: "",
-  deleted: false,
+  createdAt: "",
   bio: "",
+  publicPw: "",
+  privatePw: "",
+  deleted: false,
   img: "",
+  flag: false,
 };
 
 // ------------ MESSAGE ------------
@@ -191,7 +201,7 @@ export type JoinInfo = {
   owner: boolean;
 };
 
-// ------------ Statistics ------------
+// ------------ STATISTICS ------------
 
 export type messagecount = {
   hour: number;
@@ -205,6 +215,18 @@ export type UserStatistics = {
 };
 
 export const EmptyUserStatistics = {
+  id: "",
+  messagecounts: [],
+  error: EmptyError,
+};
+
+export type ChannelStatistics = {
+  id: string;
+  messagecounts: Array<messagecount>;
+  error: MyError;
+};
+
+export const EmptyChannelStatistics = {
   id: "",
   messagecounts: [],
   error: EmptyError,
