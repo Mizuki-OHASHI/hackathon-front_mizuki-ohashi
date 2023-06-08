@@ -191,7 +191,21 @@ export type JoinInfo = {
   owner: boolean;
 };
 
-// export type CurrentState = {
-//   channelid: string;
-//   workspaceid: string;
-// };
+// ------------ Statistics ------------
+
+export type messagecount = {
+  hour: number;
+  count: number;
+};
+
+export type UserStatistics = {
+  id: string;
+  messagecounts: Array<messagecount>;
+  error: MyError;
+};
+
+export const EmptyUserStatistics = {
+  id: "",
+  messagecounts: [],
+  error: EmptyError,
+};

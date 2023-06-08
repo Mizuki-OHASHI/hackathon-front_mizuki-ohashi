@@ -22,10 +22,10 @@ export const GPT = async (
           messages: [
             {
               role: "user",
-              content: `instruction: make title in Japanese within 10 characters.\ninputs:\n${body}`,
+              content: `instruction: make title in brief Japanese.\ninputs:\n${body}`,
             },
           ],
-          max_tokens: 30,
+          max_tokens: 100,
         }),
       }
     );

@@ -121,7 +121,7 @@ export const LP: FC = () => {
               <div className="p-4">
                 SciConnect は KaTeX を導入しています。
                 <br />
-                数式モードによる理系の会話を強力にサポート。
+                数式モードにより, 理系の会話を強力にサポート。
               </div>
             </div>
           </div>
@@ -136,13 +136,13 @@ export const LP: FC = () => {
           </div>
         </div>
         <div className="w-full h-96 bg-gradient-to-l from-blue-800 to-blue-200  flex flex-row">
-          <div className="w-6/12 h-96 py-12 text-white flex">
+          <div className="w-6/12 h-96 py-20 text-white flex">
             <Image
-              src={`${process.env.NEXT_PUBLIC_STORAGE_URI}/SciConnectDemo1.png?alt=media`}
+              src={`${process.env.NEXT_PUBLIC_STORAGE_URI}/SciConnectDemo3.png?alt=media`}
               alt="Demo1 MarkDown"
               fit="contain"
               radius="md"
-              height={96 * 4 - 24 * 4}
+              height={96 * 4 - 40 * 4}
             />
           </div>
           <div className="w-6/12 h-96 text-white flex flex-col">
@@ -169,19 +169,19 @@ export const LP: FC = () => {
                 <div className="my-auto text-2xl">統計情報の参照</div>
               </div>
               <div className="p-4">
-                メッセージ投稿時刻の分布など
+                時間帯別のメッセージ投稿件数など, 統計情報を参照できます。
                 <br />
-                理系心をくすぐる統計情報を参照できます。
+                理系心をくすぐること間違いなし。
               </div>
             </div>
           </div>
-          <div className="w-6/12 h-96 py-16 text-white flex">
+          <div className="w-6/12 h-96 py-8 text-white flex">
             <Image
-              src={`${process.env.NEXT_PUBLIC_STORAGE_URI}/SciConnectDemo1.png?alt=media`}
+              src={`${process.env.NEXT_PUBLIC_STORAGE_URI}/SciConnectDemo4.png?alt=media`}
               alt="Demo1 MarkDown"
               fit="contain"
               radius="md"
-              height={96 * 4 - 32 * 4}
+              height={96 * 4 - 16 * 4}
             />
           </div>
         </div>
