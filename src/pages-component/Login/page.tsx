@@ -25,15 +25,11 @@ export const Login: FC = () => {
   }, [currentUserId]);
 
   const loadHomeWithEmailAndPassword = async (values: typeof form.values) => {
-    if (await LogInWithEmail(values.email, values.password)) {
-      router.push("/home");
-    }
+    LogInWithEmail(values.email, values.password, setCurrentUserId);
   };
 
   const loadHomeWithGoogle = async () => {
-    if (await LogInWithGoogle()) {
-      router.push("/home");
-    }
+    LogInWithGoogle(setCurrentUserId);
   };
 
   const form = useForm({
