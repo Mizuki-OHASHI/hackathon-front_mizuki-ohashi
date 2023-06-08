@@ -28,6 +28,7 @@
     "react-katex": "^3.0.1",
     "react-latex": "^2.0.0",
     "react-rnd": "^10.4.1",
+    "recharts": "^2.6.2",
     "tabler-icons-react": "^1.56.0",
     "typescript": "5.0.4",
     "uuid": "^9.0.0"

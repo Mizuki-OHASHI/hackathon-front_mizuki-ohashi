@@ -107,3 +107,34 @@ export const RequestDeleteChannel = async (
     return;
   }
 };
+
+export const RequestDeleteUser = async (userId: string) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/user`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: { id: userId },
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return false;
+    }
+
+    alert("アカウントを削除しました");
+    return true;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました11");
+    console.error(err);
+    return false;
+  }
+};

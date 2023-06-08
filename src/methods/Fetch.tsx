@@ -4,6 +4,7 @@ import {
   WorkspaceInfo,
   MessageInfo,
   Workspaces,
+  UserStatistics,
 } from "@/methods/Type";
 import { Dispatch, SetStateAction } from "react";
 
@@ -167,6 +168,41 @@ export const FetchAllWorkspaces = async (
     return;
   } catch (err) {
     alert("サーバーとの接続に失敗しました7w");
+    console.error(err);
+    return;
+  }
+};
+
+export const FetchUserStatistics = async (
+  userId: string,
+  setUserStatistics: Dispatch<SetStateAction<UserStatistics>>
+) => {
+  try {
+    const res = await fetch(
+      `${uri}/v${ver}/statistics?type=user&id=${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const us = (await res.json()) as UserStatistics;
+    console.log(us);
+
+    if (us.error.code != 0) {
+      alert(
+        `エラー
+        ${us.error.detail}`
+      );
+    }
+    console.log(us);
+
+    setUserStatistics(us);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました1s");
     console.error(err);
     return;
   }
