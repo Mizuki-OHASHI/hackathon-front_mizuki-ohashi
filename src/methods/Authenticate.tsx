@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { fireAuth } from "@/methods/firebase";
+import { Dispatch, SetStateAction } from "react";
 
 export const CurrentUserId = (): string => {
   return fireAuth.currentUser?.uid ?? "";
@@ -24,30 +25,34 @@ export const LogOut = (): void => {
   }
 };
 
-export const LogInWithGoogle = (): boolean => {
+export const LogInWithGoogle = async (
+  setCurrentUserId: Dispatch<SetStateAction<string>>
+) => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(fireAuth, provider)
     .then((res) => {
       const user = res.user;
       alert(`ログイン中のユーザー: ${user.displayName}`);
-      return true;
+      setCurrentUserId(user.uid);
     })
     .catch((err) => {
       const errorMessage = err.message;
       alert(errorMessage);
-      return false;
     });
-  return true;
 };
 
-export const LogInWithEmail = (email: string, pwd: string): boolean => {
+export const LogInWithEmail = async (
+  email: string,
+  pwd: string,
+  setCurrentUserId: Dispatch<SetStateAction<string>>
+) => {
   const auth = getAuth();
   // setPersistence(auth, browserSessionPersistence);
   signInWithEmailAndPassword(auth, email, pwd)
     .then((res) => {
       const user = res.user;
       alert(`ログイン中のユーザー: ${user.email}`);
-      return true;
+      setCurrentUserId(user.uid);
     })
     .catch((err) => {
       const errorCode = err.code;
@@ -64,21 +69,27 @@ export const LogInWithEmail = (email: string, pwd: string): boolean => {
               Password: ${pwd}`
             )
           ) {
-            RegisterWithEmail(email, pwd);
+            RegisterWithEmail(email, pwd, CurrentUserId);
           }
+          return;
         case "auth/invalid-email;":
           alert("メールアドレスが無効です");
+          return;
         case "auth/user-disabled;":
           alert("アカウントが無効です");
+          return;
         default:
           alert(`${errorCode} : ${errorMessage}`);
+          return;
       }
-      return false;
     });
-  return false;
 };
 
-export const RegisterWithEmail = (email: string, pwd: string): boolean => {
+export const RegisterWithEmail = async (
+  email: string,
+  pwd: string,
+  setCurrentUserId: Dispatch<SetStateAction<string>>
+) => {
   if (
     confirm(
       `このメールアドレスとパスワードで新規登録しますか？
@@ -92,25 +103,36 @@ export const RegisterWithEmail = (email: string, pwd: string): boolean => {
       .then((res) => {
         const user = res.user;
         alert(`ログイン中のユーザー: ${user.email}`);
-        return true;
+        setCurrentUserId(user.uid);
       })
       .catch((err) => {
         const errorCode = err.code;
         const errorMessage = err.message;
+
         switch (errorCode) {
           case "auth/email-already-in-use":
-            LogInWithEmail(email, pwd);
+            if (
+              confirm(
+                `すでに Fire Base アカウントが存在します。
+                引き続き新規登録手続きを行いますか？`
+              )
+            ) {
+              LogInWithEmail(email, pwd, setCurrentUserId);
+            }
+            return;
           case "auth/weak-password":
             alert("パスワードが脆弱です");
+            return;
           case "auth/invalid-email":
             alert("メールアドレスが無効です");
+            return;
           case "auth/operation-not-allowed":
             alert("操作が許可されていません");
+            return;
           default:
             alert(`${errorCode} : ${errorMessage}`);
+            return;
         }
-        return false;
       });
   }
-  return false;
 };

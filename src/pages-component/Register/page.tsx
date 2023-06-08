@@ -1,92 +1,262 @@
-import {
-  CurrentUserId,
-  LogInWithGoogle,
-  RegisterWithEmail,
-} from "@/methods/Authenticate";
+import { LogInWithGoogle, RegisterWithEmail } from "@/methods/Authenticate";
 import { RequestCreateUser } from "@/methods/RequestCreate";
+import { Box, Group, PasswordInput, Radio, TextInput } from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
-import { FC, useState, FormEvent } from "react";
+import { FC, useEffect, useState } from "react";
+import { Registered, Login as LoginIcon } from "tabler-icons-react";
 
 export const Register: FC = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [currentUserId, setCurrentUserId] = useState("");
   const router = useRouter();
+  const [registerWith, setRegisterWith] = useState("google");
 
-  const createUserWithEmailAndPassword = async (
-    e: FormEvent<HTMLFormElement>,
-    name: string,
-    email: string,
-    password: string
-  ) => {
-    e.preventDefault();
-    if (await RegisterWithEmail(email, password)) {
-      if (await RequestCreateUser(CurrentUserId(), name)) {
-        router.push("/home");
-      }
+  // useEffect(() => {
+  //   onAuthStateChanged(fireAuth, (currentUser) => {
+  //     setCurrentUserId(currentUser?.uid ?? "");
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   if (currentUserId !== "") {
+  //     router.push("/home");
+  //   }
+  // }, [currentUserId]);
+
+  // const createUserWithEmailAndPassword = async (values: typeof form.values) => {
+  //   RegisterWithEmail(values.email, values.password, setCurrentUserId);
+  // };
+
+  // const createUserWithGoogle = async (values: typeof form.values) => {
+  //   const uid = await LogInWithGoogle();
+  //   console.log("LogInWithGoogle", await uid);
+  //   if ((await uid) != "") {
+  //     RequestCreateUser(uid, values.name, () => router.push("/home"));
+  //   }
+  // };
+
+  const handleSubmit = (values: typeof form.values) => {
+    if (registerWith == "email") {
+      console.log("try to register with email and password");
+      RegisterWithEmail(values.email, values.password, setCurrentUserId);
+    } else {
+      LogInWithGoogle(setCurrentUserId);
     }
   };
 
-  const createUserWithGoogle = async (name: string) => {
-    if (await LogInWithGoogle()) {
-      if (await RequestCreateUser(CurrentUserId(), name)) {
-        router.push("/home");
-      }
+  useEffect(() => {
+    console.log("currentUserId");
+    if (currentUserId != "") {
+      console.log(currentUserId);
+      RequestCreateUser(currentUserId, form.values.name, () =>
+        router.push("/home")
+      );
     }
-  };
+  }, [currentUserId]);
+
+  const form = useForm({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      name: (value) =>
+        value.length < 2
+          ? "表示名は２字以上"
+          : value.length > 50
+          ? "表示名は５０字以下"
+          : null,
+      email: (value) =>
+        registerWith == "google"
+          ? null
+          : /^\S+@\S+$/.test(value)
+          ? null
+          : "無効なアドレス",
+      password: (value) =>
+        registerWith == "google"
+          ? null
+          : value.length < 8
+          ? "パスワードは８文字以上"
+          : /[a-zA-Z].*\d|\d.*[a-zA-Z]/.test(value)
+          ? null
+          : "パスワードは英数字のいずれも含む必要があります",
+    },
+  });
 
   return (
-    <div>
-      <div>
-        <div>新規登録</div>
-        <div>
-          <div>名前</div>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          ></input>
-        </div>
-        <div>
-          <form
-            onSubmit={(e) => {
-              createUserWithEmailAndPassword(e, name, email, password);
-            }}
-          >
-            <div>
-              <div>メールアドレス</div>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></input>
-            </div>
-            <div>
-              <div>パスワード</div>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              ></input>
-            </div>
-            <input type="submit" value="メールアドレスとパスワードで登録する" />
-          </form>
-        </div>
-      </div>
-      <div>
-        <div>
+    <div className="h-screen w-screen">
+      <div className="fixed top-0 left-0 right-0 bg-blue-900 text-white flex flex-row h-12 z-50">
+        <div className="font-mono my-auto mx-4">SciConnect</div>
+        <div className="h-12 hover:bg-blue-800 ml-auto">
           <button
             onClick={() => {
-              createUserWithGoogle(name);
+              router.push("/register");
             }}
+            className="flex flex-row w-full h-full mx-2"
           >
-            Google アカウントで登録する
+            <Registered size={32} className="mx-2 my-auto" />
+            <div className="mx-2 my-auto">新規登録</div>
           </button>
+        </div>
+        <div className="h-12 hover:bg-blue-800">
+          <button
+            onClick={() => {
+              router.push("/login");
+            }}
+            className="flex flex-row w-full h-full mx-2"
+          >
+            <LoginIcon size={32} className="mx-2 my-auto" />
+            <div className="mx-2 my-auto">ログイン</div>
+          </button>
+        </div>
+      </div>
+      <div className="h-full pt-12 w-full bg-gradient-to-r from-blue-300 via-blue-50 to-blue-300 flex">
+        <div className="m-auto rounded-2xl border-2 p-8 bg-white border-blue-200">
+          <div className="font-mono mx-auto mb-8 mt-2">
+            Welcome to SciConnect !
+          </div>
+          <Box maw={320} mx="auto">
+            <Radio.Group
+              value={registerWith}
+              onChange={setRegisterWith}
+              name="loginWith"
+              label="新規登録の方法を選択"
+              withAsterisk
+            >
+              <Group my="xs">
+                <Radio value="google" label="Google アカウントで登録する" />
+                <Radio
+                  value="email"
+                  label="メールアドレスとパスワードで登録する"
+                />
+              </Group>
+            </Radio.Group>
+            <TextInput
+              withAsterisk
+              label="表示名"
+              placeholder=""
+              {...form.getInputProps("name")}
+            />
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+              {registerWith == "email" ? (
+                <>
+                  <TextInput
+                    withAsterisk
+                    label="メールアドレス"
+                    placeholder="sci.connect@example.com"
+                    {...form.getInputProps("email")}
+                  />
+
+                  <PasswordInput
+                    withAsterisk
+                    label="パスワード"
+                    placeholder=""
+                    {...form.getInputProps("password")}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+              <Group position="center" mt="md">
+                <button type="submit" className="p-2">
+                  {registerWith == "email"
+                    ? "メールアドレスとパスワードで登録"
+                    : "Google アカウントで登録"}
+                </button>
+              </Group>
+            </form>
+          </Box>
         </div>
       </div>
     </div>
   );
 };
+
+// export const Register2: FC = () => {
+//   const [name, setName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+
+//   const router = useRouter();
+
+//   const createUserWithEmailAndPassword = async (
+//     e: FormEvent<HTMLFormElement>,
+//     name: string,
+//     email: string,
+//     password: string
+//   ) => {
+//     e.preventDefault();
+//     if (await RegisterWithEmail(email, password)) {
+//       console.log("successfully registered to FireAuth");
+//       if (await RequestCreateUser(CurrentUserId(), name)) {
+//         console.log("successfully registered to the data base");
+//         router.push("/home");
+//       }
+//     }
+//   };
+
+//   const createUserWithGoogle = async (name: string) => {
+//     if (await LogInWithGoogle()) {
+//       if (await RequestCreateUser(CurrentUserId(), name)) {
+//         router.push("/home");
+//       }
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <div>
+//         <div>新規登録</div>
+//         <div>
+//           <div>名前</div>
+//           <input
+//             type="text"
+//             value={name}
+//             onChange={(e) => {
+//               setName(e.target.value);
+//             }}
+//           ></input>
+//         </div>
+//         <div>
+//           <form
+//             onSubmit={(e) => {
+//               createUserWithEmailAndPassword(e, name, email, password);
+//             }}
+//           >
+//             <div>
+//               <div>メールアドレス</div>
+//               <input
+//                 type="email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//               ></input>
+//             </div>
+//             <div>
+//               <div>パスワード</div>
+//               <input
+//                 type="password"
+//                 value={password}
+//                 onChange={(e) => setPassword(e.target.value)}
+//               ></input>
+//             </div>
+//             <input type="submit" value="メールアドレスとパスワードで登録する" />
+//           </form>
+//         </div>
+//       </div>
+//       <div>
+//         <div>
+//           <button
+//             onClick={() => {
+//               createUserWithGoogle(name);
+//             }}
+//           >
+//             Google アカウントで登録する
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };

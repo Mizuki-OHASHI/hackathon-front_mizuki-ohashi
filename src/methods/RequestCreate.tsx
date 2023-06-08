@@ -1,12 +1,17 @@
 import { MyError } from "@/methods/Type";
 import { GetDateTime } from "./Tools";
-import { rejects } from "assert";
+import { useRouter } from "next/router";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
 const ver = process.env.NEXT_PUBLIC_BACK_END_VERSION;
 
 // ------------ CREATE ------------
-export const RequestCreateUser = async (userId: string, name: string) => {
+export const RequestCreateUser = async (
+  userId: string,
+  name: string,
+  routerPushHome: () => void
+) => {
+  console.log("try to create user ...");
   try {
     const res = await fetch(`${uri}/v${ver}/user`, {
       method: "POST",
@@ -27,6 +32,8 @@ export const RequestCreateUser = async (userId: string, name: string) => {
     }
 
     alert("ユーザーの新規登録に成功しました");
+
+    routerPushHome();
     return true;
   } catch (err) {
     alert("サーバーとの接続に失敗しました5");

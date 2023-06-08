@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { UserInfo } from "@/methods/Type";
-import { DropdownMenus } from "./DropdownMenu";
+import { DropdownMenus } from "./Header-component/DropdownMenu";
 import {
   BrandSamsungpass,
   InfoCircle,
@@ -83,7 +83,7 @@ export const SettingsHeader: FC<Props> = (props) => {
   }, [props.path]);
 
   return (
-    <div className="h-12 w-screen bg-blue-900 text-white flex flex-row">
+    <div className="fixed top-0 left-0 right-0 h-12 w-screen bg-blue-900 text-white flex flex-row z-50">
       <div className="h-12 w-2/12 text-center flex flex-row">
         <button
           className="h-12 w-4/12 my-auto flex flex-row hover:bg-blue-800"
