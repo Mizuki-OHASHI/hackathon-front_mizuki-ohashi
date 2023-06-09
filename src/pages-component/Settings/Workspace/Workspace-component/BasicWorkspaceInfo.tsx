@@ -267,7 +267,9 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
             <div>
               ワークスペースを削除します。
               <br />
-              この操作は取り消せません！
+              配下の チャンネル および メッセージ も削除されます。
+              <br />
+              この操作は取り消せません。
             </div>
             <Checkbox
               className="my-4"

@@ -249,7 +249,9 @@ export const BasicChannelInfo: FC<Props> = (props) => {
             <div>
               チャンネルを削除します。
               <br />
-              この操作は取り消せません！
+              配下のメッセージも削除されます。
+              <br />
+              この操作は取り消せません。
             </div>
             <Checkbox
               className="my-4"

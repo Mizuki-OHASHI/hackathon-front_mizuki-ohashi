@@ -7,10 +7,12 @@ import { FetchUserInfo } from "@/methods/Fetch";
 import { EmptyUserInfo, UserInfo } from "@/methods/Type";
 import { onAuthStateChanged } from "firebase/auth";
 import { fireAuth } from "@/methods/firebase";
+import { useRouter } from "next/router";
 
 export const Home: FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>(EmptyUserInfo);
   const [currentUserId, setCurrentUserId] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(fireAuth, (currentUser) => {
@@ -19,11 +21,15 @@ export const Home: FC = () => {
   }, []);
 
   useEffect(() => {
-    FetchUserInfo(currentUserId, setUserInfo);
+    FetchUserInfo(currentUserId, setUserInfo, () => {
+      router.push("/");
+    });
   }, [currentUserId]);
 
   const updateUserInfo = () => {
-    FetchUserInfo(currentUserId, setUserInfo);
+    FetchUserInfo(currentUserId, setUserInfo, () => {
+      router.push("/");
+    });
   };
 
   return (

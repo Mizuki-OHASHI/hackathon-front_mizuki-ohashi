@@ -46,7 +46,9 @@ export const SettingsChannel: FC = () => {
   }, []);
 
   useEffect(() => {
-    FetchUserInfo(currentUserId, setUserInfo);
+    FetchUserInfo(currentUserId, setUserInfo, () => {
+      router.push("/");
+    });
   }, [currentUserId]);
 
   useEffect(() => {

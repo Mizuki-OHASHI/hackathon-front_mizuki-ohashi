@@ -12,11 +12,13 @@ import { onAuthStateChanged } from "firebase/auth";
 import { ListWorkspaceAndChannel } from "./User-component/ListWorkspaceAndChannel";
 import { ShowUserStatistics } from "./User-component/UserStatistics";
 import { BasicUserInfo } from "./User-component/BasicUserInfo";
+import { useRouter } from "next/router";
 
 export const SettingsUser: FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>(EmptyUserInfo);
   const [currentUserId, setCurrentUserId] = useState("");
   const [path, setPath] = useState("/user");
+  const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(fireAuth, (currentUser) => {
@@ -25,7 +27,9 @@ export const SettingsUser: FC = () => {
   }, []);
 
   useEffect(() => {
-    FetchUserInfo(currentUserId, setUserInfo);
+    FetchUserInfo(currentUserId, setUserInfo, () => {
+      router.push("/");
+    });
   }, [currentUserId]);
 
   const [userStatistics, setUserStatistics] =

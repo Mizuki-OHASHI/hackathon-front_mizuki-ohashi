@@ -76,17 +76,21 @@ export const JoinChannel: FC<ChannelProps> = (props) => {
   useEffect(() => {
     if (workspaceInfo.channels != null && props.channels != null) {
       setChannelsToJoin(
-        workspaceInfo.channels.map((c) => {
-          if (
-            props.channels.some((c_) => {
-              return c_.id == c.id;
-            })
-          ) {
-            return { value: c.id, label: c.name, disabled: true };
-          } else {
-            return { value: c.id, label: c.name };
-          }
-        })
+        workspaceInfo.channels
+          .filter((c) => {
+            return !c.deleted;
+          })
+          .map((c) => {
+            if (
+              props.channels.some((c_) => {
+                return c_.id == c.id;
+              })
+            ) {
+              return { value: c.id, label: c.name, disabled: true };
+            } else {
+              return { value: c.id, label: c.name };
+            }
+          })
       );
     }
   }, [workspaceInfo, props.channels]);
@@ -177,17 +181,21 @@ export const JoinWorkspace: FC<WorkspaceProps> = (props) => {
   useEffect(() => {
     if (workspaces.list != null && props.joinedWorkspaces != null) {
       setWorkspacesToJoin(
-        workspaces.list.map((c) => {
-          if (
-            props.joinedWorkspaces.some((c_) => {
-              return c_.id == c.id;
-            })
-          ) {
-            return { value: c.id, label: c.name, disabled: true };
-          } else {
-            return { value: c.id, label: c.name };
-          }
-        })
+        workspaces.list
+          .filter((w) => {
+            return !w.deleted;
+          })
+          .map((c) => {
+            if (
+              props.joinedWorkspaces.some((c_) => {
+                return c_.id == c.id;
+              })
+            ) {
+              return { value: c.id, label: c.name, disabled: true };
+            } else {
+              return { value: c.id, label: c.name };
+            }
+          })
       );
     }
   }, [workspaces, props.joinedWorkspaces]);

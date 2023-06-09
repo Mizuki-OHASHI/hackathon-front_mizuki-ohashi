@@ -93,7 +93,7 @@ export const ReplyWrapper: FC<Props> = (props) => {
         </div>
       </div>
       <div className="border-t-2 border-blue-200 p-2">
-        <div>
+        <div className="break-words">
           <Parser lines={props.reply.body} />
         </div>
       </div>
