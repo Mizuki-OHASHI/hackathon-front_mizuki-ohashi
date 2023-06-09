@@ -8,6 +8,8 @@ import {
   ChannelStatistics,
   WorkspaceStatistics,
 } from "@/methods/Type";
+import { reload } from "firebase/auth";
+import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
@@ -17,7 +19,8 @@ const ver = process.env.NEXT_PUBLIC_BACK_END_VERSION;
 
 export const FetchUserInfo = async (
   userId: string,
-  setUserInfo: Dispatch<SetStateAction<UserInfo>>
+  setUserInfo: Dispatch<SetStateAction<UserInfo>>,
+  routerPushLP: () => void
 ) => {
   if (userId == "error" || userId.length != 28) {
     return;
@@ -37,6 +40,14 @@ export const FetchUserInfo = async (
         `エラー
         ${userInfo.error.detail}`
       );
+    }
+
+    if (userInfo.user.deleted) {
+      alert(
+        `アカウントは削除済みです。
+        新規登録し直してください`
+      );
+      routerPushLP();
     }
 
     setUserInfo(userInfo);

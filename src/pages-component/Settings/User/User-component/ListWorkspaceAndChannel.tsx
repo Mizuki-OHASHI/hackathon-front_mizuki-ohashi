@@ -54,11 +54,25 @@ export const ListWorkspaceAndChannel: FC<Props> = (props) => {
       );
     };
 
+    const deletedWorkspaceWrapper = (ws: Workspace) => {
+      return (
+        <div key={ws.id} className="rounded-xl flex flex-row">
+          <div className="pl-2 my-auto w-8/12 text-left overflow-x-scroll whitespace-nowrap text-gray-300">
+            {ws.name}
+          </div>
+          <div className="w-4/12 my-1 py-1 px-2 mx-2 rounded border-2 border-gray-100 text-gray-300">
+            <div className="w-full text-center">削除済</div>
+          </div>
+        </div>
+      );
+    };
+
     return (
       <div className="m-2 p-2 bg-white rounded-2xl">
         {props.workspaces.map((ws) => {
-          // if ()
-          return workspaceWrapper(ws);
+          return ws.deleted
+            ? deletedWorkspaceWrapper(ws)
+            : workspaceWrapper(ws);
         })}
       </div>
     );
@@ -110,11 +124,23 @@ export const ListWorkspaceAndChannel: FC<Props> = (props) => {
       );
     };
 
+    const deletedChannelWrapper = (ch: Channel) => {
+      return (
+        <div key={ch.id} className="rounded-xl flex flex-row">
+          <div className="pl-2 my-auto w-8/12 text-left overflow-x-scroll whitespace-nowrap text-gray-300">
+            {ch.name}
+          </div>
+          <div className="w-4/12 my-1 py-1 px-2 mx-2 rounded border-2 border-gray-100 text-gray-300">
+            <div className="w-full text-center">削除済</div>
+          </div>
+        </div>
+      );
+    };
+
     return (
       <div className="m-2 p-2 bg-white rounded-2xl">
         {props.channels.map((ch) => {
-          // if ()
-          return channelWrapper(ch);
+          return ch.deleted ? deletedChannelWrapper(ch) : channelWrapper(ch);
         })}
       </div>
     );

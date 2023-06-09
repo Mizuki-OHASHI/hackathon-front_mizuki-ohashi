@@ -47,7 +47,7 @@ export const UploadIcon: FC<Props> = (props) => {
           });
       })
       .catch((error) => {
-        console.log(error.message); // output: I just want to stop
+        console.log(error.message);
       });
   };
 

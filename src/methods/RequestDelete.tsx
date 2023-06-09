@@ -115,7 +115,7 @@ export const RequestDeleteChannel = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: { id: channelId, privatepassword: password },
+        channel: { id: channelId, privatepassword: password },
         userid: userId,
       }),
     });

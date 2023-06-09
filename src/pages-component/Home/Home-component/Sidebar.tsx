@@ -11,6 +11,7 @@ import {
 } from "@/pages-component/Home/Home-component/Sidebar-component/Join";
 import { ListChannels } from "./Sidebar-component/List";
 import { ConvQueryToString } from "@/methods/Tools";
+import { ShowIcon } from "@/methods/ShowIcon";
 
 type Props = {
   userInfo: UserInfo;
@@ -31,20 +32,26 @@ export const Sidebar: FC<Props> = (props) => {
       return (
         <div>
           {workspaces.map((w) => {
+            if (w.deleted) {
+              return <></>;
+            }
             return (
               <div
                 key={w.id}
-                className={`flex flex-row rounded ${
+                className={`my-2 lex flex-row rounded ${
                   w.id == workspaceid ? "bg-blue-200" : ""
                 } hover:bg-blue-100`}
               >
                 <button
-                  className="w-full text-left text-lg px-2 whitespace-nowrap overflow-x-scroll"
+                  className="w-full text-lg px-2 flex flex-row"
                   onClick={() => {
                     router.push(`/home?workspaceid=${w.id}`);
                   }}
                 >
-                  {w.name}
+                  <ShowIcon iconId={w.img} iconSize={32} onClick={() => {}} />
+                  <div className="px-2 my-auto text-left whitespace-nowrap overflow-x-scroll">
+                    {w.name}
+                  </div>
                 </button>
               </div>
             );

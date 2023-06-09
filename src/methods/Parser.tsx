@@ -1,16 +1,22 @@
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 import "katex/dist/katex.min.css";
 import katex from "katex";
+import { Image } from "@mantine/core";
 
 const arr = [
-  { re: /^\s*#\s+/, cn: "text-4xl", id: 0 },
-  { re: /^\s*##\s+/, cn: "text-3xl", id: 0 },
-  { re: /^\s*###\s+/, cn: "text-2xl", id: 0 },
+  { re: /^\s*#\s+/, cn: "text-2xl", id: 0 },
+  { re: /^\s*##\s+/, cn: "text-xl", id: 0 },
+  { re: /^\s*###\s+/, cn: "text-lg", id: 0 },
   { re: /^\s*`\s+/, cn: "font-mono", id: 0 },
-  { re: /^\s*-\s+/, cn: "text-lg list-inside", id: 1 },
+  { re: /^\s*-\s+/, cn: "text-base list-inside", id: 1 },
   { re: /^\s*-{3,}\s*$/, cn: "h-0.5 border-none bg-blue-200", id: 2 },
   { re: /^\s*\$\s+/, cn: "", id: 3 },
-  { re: /^(.*?)\[(.*?)\]\((http[s]?:\/\/.*?)\)(.*?)$/, cn: "", id: 4 },
+  {
+    re: /^(.*?)!\[(.*?)\]\((http[s]?:\/\/.*?),\s*([0-9]+?)\)(.*?)$/,
+    cn: "img",
+    id: 4,
+  },
+  { re: /^(.*?)\[(.*?)\]\((http[s]?:\/\/.*?)\)(.*?)$/, cn: "a", id: 4 },
 ];
 
 type Props = {
@@ -27,7 +33,7 @@ export const Parser: FC<Props> = (props) => {
     return <div dangerouslySetInnerHTML={{ __html: renderedHTML }} />;
   };
 
-  const lineParser = (line: string): JSX.Element => {
+  const lineParser = (line: string): ReactElement => {
     for (let i = 0; i < arr.length; i++) {
       if (arr[i].re.test(line)) {
         switch (arr[i].id) {
@@ -48,31 +54,46 @@ export const Parser: FC<Props> = (props) => {
               <div key={line}>{renderKaTeX(line.replace(arr[i].re, ""))}</div>
             );
           case 4:
-            const regex = /^(.*?)\[(.*?)\]\((http[s]?:\/\/.*?)\)(.*?)$/;
-            const matches = line.match(regex);
+            // const regex = /^(.*?)\[(.*?)\]\((http[s]?:\/\/.*?)\)(.*?)$/;
+            const matches = line.match(arr[i].re);
 
             if (matches) {
               const head = matches[1];
               const label = matches[2];
               const ref = matches[3];
-              const tail = matches[4];
+              const size = matches[4];
+              const tail = matches[5];
 
               return (
-                <div className="text-lg">
+                <div className="text-base">
                   {head}
-                  <a className="text-blue-600" href={ref}>
-                    {label}
-                  </a>
+                  {arr[i].cn == "a" ? (
+                    <a className="text-blue-600" href={ref}>
+                      {label}
+                    </a>
+                  ) : (
+                    <div className="m-2 whitespace-nowrap overflow-hidden">
+                      <Image
+                        radius="md"
+                        width={size}
+                        alt={label}
+                        src={ref}
+                        withPlaceholder={true}
+                        placeholder={label}
+                      />
+                    </div>
+                  )}
+
                   {tail}
                 </div>
               );
             }
 
-            return <div></div>;
+            return <></>;
         }
       }
     }
-    return <div className="text-lg">{line.replace(/\s*$/, "")}</div>;
+    return <div className="text-base">{line.replace(/\s*$/, "")}</div>;
   };
 
   return (

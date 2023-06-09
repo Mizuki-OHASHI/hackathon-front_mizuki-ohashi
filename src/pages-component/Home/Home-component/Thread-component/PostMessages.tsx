@@ -4,7 +4,8 @@ import { RequestCreateMessage } from "@/methods/RequestCreate";
 import { useRouter } from "next/router";
 import { ConvQueryToString } from "@/methods/Tools";
 import { GPT } from "@/methods/gpt";
-import { MailForward, MessageChatbot } from "tabler-icons-react";
+import { MailForward, MessageChatbot, PhotoPlus } from "tabler-icons-react";
+import { UploadImageContainer } from "@/methods/UploadImage";
 
 type Props = {
   updateMessage: () => void;
@@ -84,8 +85,10 @@ export const PostMessages: FC<Props> = (props) => {
               </div>
             </div>
             <div>
-              <div className="flex flex-row-reverse mb-1 mx-6">
+              <div className="flex mb-1 mx-6">
+                <UploadImageContainer setBody={setBody} />
                 <button
+                  className="ml-auto"
                   type="button"
                   onClick={() => {
                     if (body != "") {

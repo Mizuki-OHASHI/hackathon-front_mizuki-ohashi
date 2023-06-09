@@ -24,6 +24,9 @@ export const ListChannels: FC<Props> = (props) => {
   return (
     <div>
       {activeChannels.map((c) => {
+        if (c.deleted) {
+          return <></>;
+        }
         return (
           <div
             key={c.id}

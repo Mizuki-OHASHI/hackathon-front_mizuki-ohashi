@@ -4,11 +4,13 @@ import { FetchUserInfo } from "@/methods/Fetch";
 import { EmptyUserInfo, UserInfo } from "@/methods/Type";
 import { fireAuth } from "@/methods/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/router";
 
 export const SettingsInit: FC = () => {
   const [userInfo, setUserInfo] = useState<UserInfo>(EmptyUserInfo);
   const [currentUserId, setCurrentUserId] = useState("");
   const [path, setPath] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(fireAuth, (currentUser) => {
@@ -17,7 +19,9 @@ export const SettingsInit: FC = () => {
   }, []);
 
   useEffect(() => {
-    FetchUserInfo(currentUserId, setUserInfo);
+    FetchUserInfo(currentUserId, setUserInfo, () => {
+      router.push("/");
+    });
   }, [currentUserId]);
 
   return (
