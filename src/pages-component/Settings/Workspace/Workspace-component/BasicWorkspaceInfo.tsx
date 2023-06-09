@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { Channel } from "@/methods/Type";
+import { Workspace } from "@/methods/Type";
 import { useRouter } from "next/router";
 import {
   ArrowBarToDown,
@@ -7,7 +7,7 @@ import {
   Edit,
   InfoCircle,
 } from "tabler-icons-react";
-import { RequestEditChannel } from "@/methods/RequestEdit";
+import { RequestEditWorkspace } from "@/methods/RequestEdit";
 import { ConvDateTime, ConvQueryToString } from "@/methods/Tools";
 import {
   Modal,
@@ -19,17 +19,20 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { RequestDeleteChannel } from "@/methods/RequestDelete";
+import { RequestDeleteWorkspace } from "@/methods/RequestDelete";
+import { UploadIcon } from "@/methods/UploadIcon";
+import { ShowIcon } from "@/methods/ShowIcon";
 
 type Props = {
   currentUserId: string;
-  channel: Channel;
+  workspace: Workspace;
   isOwner: boolean;
 };
 
-export const BasicChannelInfo: FC<Props> = (props) => {
+export const BasicWorkspaceInfo: FC<Props> = (props) => {
   const router = useRouter();
   const [state, setState] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [publicPw, setPublicPw] = useState("");
@@ -45,37 +48,46 @@ export const BasicChannelInfo: FC<Props> = (props) => {
   }, [option]);
 
   useEffect(() => {
-    setName(props.channel.name);
-    setBio(props.channel.bio);
-    setPublicPw(props.channel.publicPw);
-  }, [props.channel]);
+    // setImageUrl(props.userInfo.user.img);
+    setName(props.workspace.name);
+    setBio(props.workspace.bio);
+    setPublicPw(props.workspace.publicPw);
+    setImageUrl(props.workspace.img);
+    console.log("test", props.workspace);
+  }, [props.workspace]);
+
+  // useEffect(() => {
+  //   setImageUrl(props.userInfo.user.img);
+  //   setName(props.userInfo.user.name);
+  //   setBio(props.userInfo.user.bio);
+  // }, [props.userInfo]);
 
   const form = useForm({
     initialValues: {
-      channelId: "",
+      workspaceId: "",
       pw: "",
       confirm: false,
     },
 
     // functions will be used to validate values at corresponding key
     validate: {
-      channelId: (value) =>
-        value !== props.channel.id ? "ID が一致しません" : null,
+      workspaceId: (value) =>
+        value !== props.workspace.id ? "ID が一致しません" : null,
       confirm: (value) => (!value ? "チェックしてください" : null),
     },
   });
 
   const handleSubmitDelete = async () => {
     close();
-    if (confirm("本当にチャンネルを削除しますか？")) {
+    if (confirm("本当にワークスペースを削除しますか？")) {
       if (
-        await RequestDeleteChannel(
-          props.channel.id,
+        await RequestDeleteWorkspace(
+          props.workspace.id,
           props.currentUserId,
           form.values.pw
         )
       ) {
-        alert("チャンネルを削除しました");
+        alert("ワークスペースを削除しました");
         form.reset();
         router.push("/settings");
       }
@@ -85,31 +97,31 @@ export const BasicChannelInfo: FC<Props> = (props) => {
   const handleSubmitEdit = async () => {
     if (confirm("保存しますか？")) {
       if (
-        await RequestEditChannel(
+        await RequestEditWorkspace(
           props.currentUserId,
-          props.channel.id,
+          props.workspace.id,
           name,
           bio,
           publicPw,
-          privatePw
-          // imageUrl
+          privatePw,
+          imageUrl
         )
       ) {
-        setName(props.channel.name);
-        setBio(props.channel.bio);
-        setPublicPw(props.channel.publicPw);
+        setName(props.workspace.name);
+        setBio(props.workspace.bio);
+        setPublicPw(props.workspace.publicPw);
         setPrivatePw("");
-        router.push(`/settings/channel?channelid=${props.channel?.id}`);
+        router.push(`/settings/workspace?workspaceid=${props.workspace?.id}`);
       }
     }
   };
 
   const handleSubmitCancel = () => {
     if (confirm("取り消しますか？ 変更内容は保存されません！")) {
-      router.push("/settings/channel");
-      setName(props.channel.name);
-      setBio(props.channel.bio);
-      setPublicPw(props.channel.publicPw);
+      router.push("/settings/workspace");
+      setName(props.workspace.name);
+      setBio(props.workspace.bio);
+      setPublicPw(props.workspace.publicPw);
       setPrivatePw("");
     }
   };
@@ -119,13 +131,13 @@ export const BasicChannelInfo: FC<Props> = (props) => {
       <div className="w-full flex flex-row">
         <div className="flex flex-row">
           <InfoCircle size={32} color="darkblue" />
-          <div className="text-lg my-auto mx-2">チャンネル基本情報</div>
+          <div className="text-lg my-auto mx-2">ワークスペース基本情報</div>
         </div>
         {props.isOwner ? (
           <button
             className="flex flex-row ml-auto"
             onClick={() => {
-              router.push("/settings/channel?option=edit");
+              router.push("/settings/workspace?option=edit");
             }}
           >
             <Edit size={32} />
@@ -134,9 +146,22 @@ export const BasicChannelInfo: FC<Props> = (props) => {
           <></>
         )}
       </div>
+      {state == "edit" ? (
+        <div className="m-6">
+          <UploadIcon imageUrl={imageUrl} setImageUrl={setImageUrl} />
+        </div>
+      ) : (
+        <div className="my-auto mx-2 h-56 w-56 p-4">
+          <ShowIcon
+            iconId={props.workspace.img}
+            iconSize={192}
+            onClick={() => {}}
+          />
+        </div>
+      )}
       <div className="py-2">
         <div className="border-b-2 border-blue-100">
-          <div className="px-4">チャンネル名</div>
+          <div className="px-4">ワークスペース名</div>
         </div>
         {state == "edit" ? (
           <input
@@ -146,16 +171,16 @@ export const BasicChannelInfo: FC<Props> = (props) => {
           />
         ) : (
           <div>
-            <div className="px-2">{props.channel?.name}</div>
+            <div className="px-2">{props.workspace?.name}</div>
           </div>
         )}
       </div>
       <div className={`py-2 ${state == "edit" ? "text-blue-300" : ""}`}>
         <div className="border-b-2 border-blue-100">
-          <div className="px-4">チャンネルID</div>
+          <div className="px-4">ワークスペースID</div>
         </div>
         <div>
-          <div className="px-2">{props.channel?.id}</div>
+          <div className="px-2">{props.workspace?.id}</div>
         </div>
       </div>
       <div className={`py-2 ${state == "edit" ? "text-blue-300" : ""}`}>
@@ -164,9 +189,9 @@ export const BasicChannelInfo: FC<Props> = (props) => {
         </div>
         <div>
           <div className="px-2">
-            {/N/.test(ConvDateTime(props.channel?.createdat))
+            {/N/.test(ConvDateTime(props.workspace?.createdat))
               ? ""
-              : ConvDateTime(props.channel?.createdat)}
+              : ConvDateTime(props.workspace?.createdat)}
           </div>
         </div>
       </div>
@@ -182,7 +207,7 @@ export const BasicChannelInfo: FC<Props> = (props) => {
           />
         ) : (
           <div>
-            <div className="px-2">{props.channel?.bio}</div>
+            <div className="px-2">{props.workspace?.bio}</div>
           </div>
         )}
       </div>
@@ -199,7 +224,7 @@ export const BasicChannelInfo: FC<Props> = (props) => {
         ) : (
           <div>
             <div className="px-2">
-              {props.channel?.publicPw ?? "パスワードなし"}
+              {props.workspace?.publicPw ?? "パスワードなし"}
             </div>
           </div>
         )}
@@ -243,11 +268,11 @@ export const BasicChannelInfo: FC<Props> = (props) => {
       ) : (
         <></>
       )}
-      <Modal opened={opened} onClose={close} title="チャンネルの削除">
+      <Modal opened={opened} onClose={close} title="ワークスペースの削除">
         <Box maw={300} mx="auto">
           <form onSubmit={form.onSubmit(handleSubmitDelete)}>
             <div>
-              チャンネルを削除します。
+              ワークスペースを削除します。
               <br />
               この操作は取り消せません！
             </div>
@@ -257,12 +282,12 @@ export const BasicChannelInfo: FC<Props> = (props) => {
               label="この操作が取り消せないことを理解した。"
               {...form.getInputProps("confirm", { type: "checkbox" })}
             />
-            <div>チャンネルIDを入力してください。</div>
+            <div>ワークスペースIDを入力してください。</div>
             <TextInput
               withAsterisk
-              label={props.channel.id}
-              placeholder={props.channel.id}
-              {...form.getInputProps("channelId")}
+              label={props.workspace.id}
+              placeholder={props.workspace.id}
+              {...form.getInputProps("workspaceId")}
             />
             <PasswordInput
               className="my-2"
@@ -272,7 +297,7 @@ export const BasicChannelInfo: FC<Props> = (props) => {
             />
             <Group position="center" mt="md">
               <button type="submit" className="text-red-500">
-                チャンネルを削除
+                ワークスペースを削除
               </button>
             </Group>
           </form>

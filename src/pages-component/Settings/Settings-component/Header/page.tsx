@@ -53,9 +53,10 @@ export const SettingsHeader: FC<Props> = (props) => {
       icon: <EditCircle size={16} />,
     },
     {
-      label: "公開パスワード変更",
-      path: "/channel?option=password",
-      icon: <BrandSamsungpass size={16} />,
+      label: "チャンネル削除",
+      path: `/channel?option=delete`,
+      icon: <Trash size={16} />,
+      isRed: true,
     },
   ];
 
@@ -71,15 +72,16 @@ export const SettingsHeader: FC<Props> = (props) => {
       icon: <EditCircle size={16} />,
     },
     {
-      label: "公開パスワード変更",
-      path: "/workspace?option=password",
-      icon: <BrandSamsungpass size={16} />,
+      label: "ワークスペース削除",
+      path: "/workspace?option=delete",
+      icon: <Trash size={16} />,
+      isRed: true,
     },
   ];
 
   const router = useRouter();
   useEffect(() => {
-    router.push(`/settings/${props.path}`);
+    router.push(`/settings${props.path}`);
   }, [props.path]);
 
   return (

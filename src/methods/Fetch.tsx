@@ -6,11 +6,14 @@ import {
   Workspaces,
   UserStatistics,
   ChannelStatistics,
+  WorkspaceStatistics,
 } from "@/methods/Type";
 import { Dispatch, SetStateAction } from "react";
 
 const uri = process.env.NEXT_PUBLIC_BACK_END_URI;
 const ver = process.env.NEXT_PUBLIC_BACK_END_VERSION;
+
+//------------ INFO ------------
 
 export const FetchUserInfo = async (
   userId: string,
@@ -144,6 +147,8 @@ export const FetchMessageInfo = async (
   }
 };
 
+//------------ ALL ------------
+
 export const FetchAllWorkspaces = async (
   setWorkspaces: Dispatch<SetStateAction<Workspaces>>
 ) => {
@@ -173,6 +178,8 @@ export const FetchAllWorkspaces = async (
     return;
   }
 };
+
+//------------ STATISTICS ------------
 
 export const FetchUserStatistics = async (
   userId: string,
@@ -239,6 +246,44 @@ export const FetchChannelStatistics = async (
     console.log(us);
 
     setChannelStatistics(us);
+    return;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました1s");
+    console.error(err);
+    return;
+  }
+};
+
+export const FetchWorkspaceStatistics = async (
+  workspaceId: string,
+  setWorkspaceStatistics: Dispatch<SetStateAction<WorkspaceStatistics>>
+) => {
+  if (workspaceId == undefined || workspaceId.length != 26) {
+    return;
+  }
+  try {
+    const res = await fetch(
+      `${uri}/v${ver}/statistics?type=workspace&id=${workspaceId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const us = (await res.json()) as WorkspaceStatistics;
+    console.log(us);
+
+    if (us.error.code != 0) {
+      alert(
+        `エラー
+        ${us.error.detail}`
+      );
+    }
+    console.log(us);
+
+    setWorkspaceStatistics(us);
     return;
   } catch (err) {
     alert("サーバーとの接続に失敗しました1s");

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { SettingsHeader } from "../Header";
+import { SettingsHeader } from "../Settings-component/Header";
 import {
   FetchChannelInfo,
   FetchChannelStatistics,
@@ -17,7 +17,7 @@ import { fireAuth } from "@/methods/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { BasicChannelInfo } from "./Channel-component/BasicChannelInfo";
 import { ShowChannelStatistics } from "./Channel-component/ChannelStatistics";
-import { ListMember } from "./Channel-component/ListMember";
+import { ListMember } from "../Settings-component/ListMember";
 import { useRouter } from "next/router";
 import { Select } from "@mantine/core";
 import { ConvQueryToString } from "@/methods/Tools";
@@ -83,14 +83,10 @@ export const SettingsChannel: FC = () => {
         setPath={setPath}
       />
       <div className="h-screen pt-12 flex flex-row">
-        <div className="w-4/12 m-4 p-8 rounded-2xl bg-blue-50">
+        <div className="w-4/12 m-4 p-8 rounded-2xl bg-blue-50 whitespace-nowrap overflow-y-scroll">
           <div className="mb-8 pb-8 border-b-2 border-blue-200">
             <Select
               placeholder="チャンネルを１つ選択"
-              // searchable
-              // onSearchChange={setChannelId}
-              // searchValue={channelId}
-              // nothingFound="一致するチャンネルがありません"
               value={channelId}
               onChange={setChannelId}
               data={channels}
@@ -99,6 +95,11 @@ export const SettingsChannel: FC = () => {
           <BasicChannelInfo
             currentUserId={currentUserId}
             channel={channelInfo.channel}
+            isOwner={
+              channelInfo.members.find((m) => {
+                return m.id == currentUserId;
+              })?.flag ?? false
+            }
           />
         </div>
         <div className="w-4/12 border-y-4 border-blue-50 m-4 p-8 rounded-2xl bg-blue-50  whitespace-nowrap overflow-y-scroll">

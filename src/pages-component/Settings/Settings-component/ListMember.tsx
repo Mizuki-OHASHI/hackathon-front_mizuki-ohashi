@@ -12,7 +12,7 @@ export const ListMember: FC<Props> = (props) => {
   const listMember = (): ReactElement => {
     const memberWrapper = (m: User): ReactElement => {
       return (
-        <div className="rounded-xl hover:bg-blue-50 h-10 p-2">
+        <div className="rounded-xl hover:bg-blue-50 h-10 p-2" key={m.id}>
           <button className="w-full flex flex-row my-auto" onClick={() => {}}>
             <div className="overflow-x-scroll whitespace-nowrap my-auto">
               {m.name}

@@ -21,7 +21,7 @@ export const EmptyUser: User = {
 export type Channel = {
   id: string;
   name: string;
-  createdAt: string;
+  createdat: string;
   bio: string;
   publicPw: string;
   privatePw: string;
@@ -33,7 +33,7 @@ export type Channel = {
 export const EmptyChannel = {
   id: "",
   name: "",
-  createdAt: "",
+  createdat: "",
   bio: "",
   publicPw: "",
   privatePw: "",
@@ -46,7 +46,7 @@ export const EmptyChannel = {
 export type Workspace = {
   id: string;
   name: string;
-  createdAt: string;
+  createdat: string;
   bio: string;
   publicPw: string;
   privatePw: string;
@@ -58,7 +58,7 @@ export type Workspace = {
 export const EmptyWorkspace: Workspace = {
   id: "",
   name: "",
-  createdAt: "",
+  createdat: "",
   bio: "",
   publicPw: "",
   privatePw: "",
@@ -227,6 +227,18 @@ export type ChannelStatistics = {
 };
 
 export const EmptyChannelStatistics = {
+  id: "",
+  messagecounts: [],
+  error: EmptyError,
+};
+
+export type WorkspaceStatistics = {
+  id: string;
+  messagecounts: Array<messagecount>;
+  error: MyError;
+};
+
+export const EmptyWorkspaceStatistics = {
   id: "",
   messagecounts: [],
   error: EmptyError,
