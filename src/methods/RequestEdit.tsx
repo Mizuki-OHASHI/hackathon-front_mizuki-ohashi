@@ -162,3 +162,50 @@ export const RequestEditChannel = async (
     return false;
   }
 };
+
+export const RequestEditWorkspace = async (
+  userId: string,
+  workspaceId: string,
+  name: string,
+  bio: string,
+  publicPw: string,
+  privatePw: string,
+  img: string
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/workspace`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: userId,
+        workspace: {
+          id: workspaceId,
+          name: name,
+          bio: bio,
+          publicpassword: publicPw,
+          privatepassword: privatePw,
+          img: img,
+        },
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return false;
+    }
+
+    alert("ワークスペース情報を編集しました");
+    return true;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました10we");
+    console.error(err);
+    return false;
+  }
+};

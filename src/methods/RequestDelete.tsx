@@ -72,42 +72,6 @@ export const RequestDeleteReply = async (
   }
 };
 
-export const RequestDeleteChannel = async (
-  channelId: string,
-  userId: string,
-  password: string
-) => {
-  try {
-    const res = await fetch(`${uri}/v${ver}/channel`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: { id: channelId, privatepassword: password },
-        userid: userId,
-      }),
-    });
-
-    const error = (await res.json()) as MyError;
-
-    if (error.code != 0) {
-      alert(
-        `エラー
-        ${error.detail}`
-      );
-      return;
-    }
-
-    alert("チャンネルを削除しました");
-    return;
-  } catch (err) {
-    alert("サーバーとの接続に失敗しました11");
-    console.error(err);
-    return;
-  }
-};
-
 export const RequestDeleteUser = async (userId: string) => {
   try {
     const res = await fetch(`${uri}/v${ver}/user`, {
@@ -134,6 +98,81 @@ export const RequestDeleteUser = async (userId: string) => {
     return true;
   } catch (err) {
     alert("サーバーとの接続に失敗しました11");
+    console.error(err);
+    return false;
+  }
+};
+
+export const RequestDeleteChannel = async (
+  channelId: string,
+  userId: string,
+  password: string
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/channel`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: { id: channelId, privatepassword: password },
+        userid: userId,
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return false;
+    }
+
+    alert("チャンネルを削除しました");
+    return true;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました11");
+    console.error(err);
+    return false;
+  }
+};
+
+export const RequestDeleteWorkspace = async (
+  workspaceId: string,
+  userId: string,
+  privatePw: string
+) => {
+  try {
+    const res = await fetch(`${uri}/v${ver}/workspace`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: userId,
+        workspace: {
+          id: workspaceId,
+          privatepassword: privatePw,
+        },
+      }),
+    });
+
+    const error = (await res.json()) as MyError;
+
+    if (error.code != 0) {
+      alert(
+        `エラー
+        ${error.detail}`
+      );
+      return false;
+    }
+
+    alert("ワークスペースを削除しました");
+    return true;
+  } catch (err) {
+    alert("サーバーとの接続に失敗しました11wd");
     console.error(err);
     return false;
   }

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { SettingsHeader } from "../Header";
+import { SettingsHeader } from "../Settings-component/Header";
 import { FetchUserInfo, FetchUserStatistics } from "@/methods/Fetch";
 import {
   EmptyUserInfo,

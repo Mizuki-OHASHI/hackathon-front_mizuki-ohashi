@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { SettingsHeader } from "../Settings/Header";
+import { SettingsHeader } from "./Settings-component/Header";
 import { FetchUserInfo } from "@/methods/Fetch";
 import { EmptyUserInfo, UserInfo } from "@/methods/Type";
 import { fireAuth } from "@/methods/firebase";
@@ -16,13 +16,23 @@ export const SettingsInit: FC = () => {
     });
   }, []);
 
-  FetchUserInfo(currentUserId, setUserInfo);
+  useEffect(() => {
+    FetchUserInfo(currentUserId, setUserInfo);
+  }, [currentUserId]);
+
   return (
-    <SettingsHeader
-      userInfo={userInfo}
-      currentUserId={currentUserId}
-      path={path}
-      setPath={setPath}
-    />
+    <div className="w-screen h-screen pt-12 bg-gradient-to-t from-blue-200 to-blue-50">
+      <SettingsHeader
+        userInfo={userInfo}
+        currentUserId={currentUserId}
+        path={path}
+        setPath={setPath}
+      />
+      <div className="flex justify-center pt-[45vh]">
+        <div className="text-blue-900 text-xl px-8 border-b-4 border-blue-200">
+          上のリボンからご希望の設定項目を選択してください。
+        </div>
+      </div>
+    </div>
   );
 };
