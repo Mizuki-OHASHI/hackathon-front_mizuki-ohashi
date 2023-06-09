@@ -48,19 +48,12 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
   }, [option]);
 
   useEffect(() => {
-    // setImageUrl(props.userInfo.user.img);
     setName(props.workspace.name);
     setBio(props.workspace.bio);
     setPublicPw(props.workspace.publicPw);
     setImageUrl(props.workspace.img);
     console.log("test", props.workspace);
   }, [props.workspace]);
-
-  // useEffect(() => {
-  //   setImageUrl(props.userInfo.user.img);
-  //   setName(props.userInfo.user.name);
-  //   setBio(props.userInfo.user.bio);
-  // }, [props.userInfo]);
 
   const form = useForm({
     initialValues: {
@@ -161,7 +154,7 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
       )}
       <div className="py-2">
         <div className="border-b-2 border-blue-100">
-          <div className="px-4">ワークスペース名</div>
+          <div className="px-4 whitespace-normal">ワークスペース名</div>
         </div>
         {state == "edit" ? (
           <input
@@ -197,7 +190,7 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
       </div>
       <div className="py-2">
         <div className="border-b-2 border-blue-100">
-          <div className="px-4">説明</div>
+          <div className="px-4 whitespace-normal">説明</div>
         </div>
         {state == "edit" ? (
           <textarea

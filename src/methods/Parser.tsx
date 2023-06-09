@@ -6,9 +6,11 @@ const arr = [
   { re: /^\s*#\s+/, cn: "text-4xl", id: 0 },
   { re: /^\s*##\s+/, cn: "text-3xl", id: 0 },
   { re: /^\s*###\s+/, cn: "text-2xl", id: 0 },
-  { re: /^\s*-\s+/, cn: "text-base list-inside", id: 1 },
+  { re: /^\s*`\s+/, cn: "font-mono", id: 0 },
+  { re: /^\s*-\s+/, cn: "text-lg list-inside", id: 1 },
   { re: /^\s*-{3,}\s*$/, cn: "h-0.5 border-none bg-blue-200", id: 2 },
   { re: /^\s*\$\s+/, cn: "", id: 3 },
+  { re: /^(.*?)\[(.*?)\]\((http[s]?:\/\/.*?)\)(.*?)$/, cn: "", id: 4 },
 ];
 
 type Props = {
@@ -45,10 +47,32 @@ export const Parser: FC<Props> = (props) => {
             return (
               <div key={line}>{renderKaTeX(line.replace(arr[i].re, ""))}</div>
             );
+          case 4:
+            const regex = /^(.*?)\[(.*?)\]\((http[s]?:\/\/.*?)\)(.*?)$/;
+            const matches = line.match(regex);
+
+            if (matches) {
+              const head = matches[1];
+              const label = matches[2];
+              const ref = matches[3];
+              const tail = matches[4];
+
+              return (
+                <div className="text-lg">
+                  {head}
+                  <a className="text-blue-600" href={ref}>
+                    {label}
+                  </a>
+                  {tail}
+                </div>
+              );
+            }
+
+            return <div></div>;
         }
       }
     }
-    return <div className="test-xl">{line.replace(/\s*$/, "")}</div>;
+    return <div className="text-lg">{line.replace(/\s*$/, "")}</div>;
   };
 
   return (
