@@ -46,7 +46,7 @@ export const SettingsUser: FC = () => {
         setPath={setPath}
       />
       <div className="h-screen pt-12 flex flex-row">
-        <div className="w-4/12 m-4 p-8 rounded-2xl bg-blue-50">
+        <div className="w-4/12 m-4 p-8 rounded-2xl bg-blue-50 whitespace-nowrap overflow-y-scroll">
           <BasicUserInfo currentUserId={currentUserId} userInfo={userInfo} />
         </div>
         <div className="w-4/12 border-y-4 border-blue-50 m-4 p-8 rounded-2xl bg-blue-50  whitespace-nowrap overflow-y-scroll">

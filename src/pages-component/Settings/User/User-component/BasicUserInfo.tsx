@@ -99,7 +99,7 @@ export const BasicUserInfo: FC<Props> = (props) => {
       )}
       <div className="py-2">
         <div className="border-b-2 border-blue-100">
-          <div className="px-4">表示名</div>
+          <div className="px-4 whitespace-normal">表示名</div>
         </div>
         {state == "edit" ? (
           <input
@@ -133,7 +133,9 @@ export const BasicUserInfo: FC<Props> = (props) => {
           />
         ) : (
           <div>
-            <div className="px-2">{props.userInfo.user.bio}</div>
+            <div className="px-2 whitespace-normal">
+              {props.userInfo.user.bio}
+            </div>
           </div>
         )}
       </div>

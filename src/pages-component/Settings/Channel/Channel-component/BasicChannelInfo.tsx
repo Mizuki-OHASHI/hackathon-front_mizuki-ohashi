@@ -136,7 +136,7 @@ export const BasicChannelInfo: FC<Props> = (props) => {
       </div>
       <div className="py-2">
         <div className="border-b-2 border-blue-100">
-          <div className="px-4">チャンネル名</div>
+          <div className="px-4 whitespace-normal">チャンネル名</div>
         </div>
         {state == "edit" ? (
           <input
@@ -172,7 +172,7 @@ export const BasicChannelInfo: FC<Props> = (props) => {
       </div>
       <div className="py-2">
         <div className="border-b-2 border-blue-100">
-          <div className="px-4">説明</div>
+          <div className="px-4 whitespace-normal">説明</div>
         </div>
         {state == "edit" ? (
           <textarea

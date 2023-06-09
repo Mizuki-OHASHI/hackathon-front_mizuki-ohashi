@@ -67,7 +67,7 @@ export const ListWorkspaceAndChannel: FC<Props> = (props) => {
   const listChannel = (): ReactElement => {
     const channelWrapper = (ch: Channel): ReactElement => {
       return (
-        <div className="rounded-xl hover:bg-blue-50 flex flex-row">
+        <div key={ch.id} className="rounded-xl hover:bg-blue-50 flex flex-row">
           <button
             className="pl-2 w-8/12 text-left overflow-x-scroll whitespace-nowrap"
             onClick={() => {
