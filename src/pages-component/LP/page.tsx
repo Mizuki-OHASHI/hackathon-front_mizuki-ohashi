@@ -247,17 +247,17 @@ export const LP: FC = () => {
 
 //     imageCompression(file, options)
 //       .then((compressedFile) => {
-//         console.log("File compressed successfully");
+//         // console.log("File compressed successfully");
 
 //         const imageUrl_ = uuidv4();
 
-//         console.log("Image URL:", imageUrl_);
+//         // console.log("Image URL:", imageUrl_);
 //         const storageRef = ref(storage, imageUrl_);
 
 //         uploadBytes(storageRef, compressedFile)
 //           .then((snapshot) => {
-//             console.log(snapshot.ref);
-//             console.log("File uploaded successfully");
+//             // console.log(snapshot.ref);
+//             // console.log("File uploaded successfully");
 //             setImageUrl(imageUrl_);
 //           })
 //           .catch((error) => {
@@ -265,7 +265,7 @@ export const LP: FC = () => {
 //           });
 //       })
 //       .catch((error) => {
-//         console.log(error.message); // output: I just want to stop
+//         // console.log(error.message); // output: I just want to stop
 //       });
 //   };
 
@@ -304,7 +304,7 @@ export const LP: FC = () => {
 //   const onSubmit = (event: FormEvent) => {
 //     event.preventDefault();
 //     if (image === "") {
-//       console.log("ファイルが選択されていません");
+//       // console.log("ファイルが選択されていません");
 //     }
 //     // アップロード処理
 //     const uploadTask = storage.ref(`/images/${image.name}`).put(image);
@@ -320,12 +320,12 @@ export const LP: FC = () => {
 //     // 進行中のsnapshotを得る
 //     // アップロードの進行度を表示
 //     const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//     console.log(percent + "% done");
-//     console.log(snapshot);
+//     // console.log(percent + "% done");
+//     // console.log(snapshot);
 //   };
 //   const error = (error: any) => {
 //     // エラーハンドリング
-//     console.log(error);
+//     // console.log(error);
 //   };
 
 //   const complete = () => {
@@ -381,22 +381,22 @@ export const LP: FC = () => {
 //   imageCompression(file, options)
 //     .then((compressedFile) => {
 //       setSelectedFile(compressedFile); // write your own logic
-//       console.log("setSelectedFile(compressedFile)");
-//       console.log(file);
-//       console.log(selectedFile);
+//       // console.log("setSelectedFile(compressedFile)");
+//       // console.log(file);
+//       // console.log(selectedFile);
 //       return true;
 //     })
 //     .catch((error) => {
-//       console.log(error.message); // output: I just want to stop
+//       // console.log(error.message); // output: I just want to stop
 //     });
 // };
 
 // const handleFileUpload2 = async (event: ChangeEvent<HTMLInputElement>) => {
 //   const file = event.target.files?.[0];
 
-//   console.log("test");
+//   // console.log("test");
 //   if (file) {
-//     console.log(await imageCompressor(file));
+//     // console.log(await imageCompressor(file));
 //   }
 
 //   if (
@@ -407,12 +407,12 @@ export const LP: FC = () => {
 //   ) {
 //     const storageRef = ref(storage, selectedFile.name);
 
-//     console.log("storageRef");
+//     // console.log("storageRef");
 
 //     uploadBytes(storageRef, selectedFile)
 //       .then((snapshot) => {
-//         console.log(snapshot.ref);
-//         console.log("File uploaded successfully");
+//         // console.log(snapshot.ref);
+//         // console.log("File uploaded successfully");
 //       })
 //       .catch((error) => {
 //         console.error("Error uploading file:", error);
@@ -425,7 +425,7 @@ export const LP: FC = () => {
 
 //   getDownloadURL(storageRef)
 //     .then((url) => {
-//       console.log("File download URL:", url);
+//       // console.log("File download URL:", url);
 //       window.open(url, "_blank"); // Open the download URL in a new window
 //     })
 //     .catch((error) => {

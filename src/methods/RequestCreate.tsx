@@ -11,7 +11,7 @@ export const RequestCreateUser = async (
   name: string,
   routerPushHome: () => void
 ) => {
-  console.log("try to create user ...");
+  // console.log("try to create user ...");
   try {
     const res = await fetch(`${uri}/v${ver}/user`, {
       method: "POST",

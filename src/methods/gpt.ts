@@ -32,7 +32,7 @@ export const GPT = async (
 
     const res_ = (await res.json()) as GPTRes;
 
-    console.log(res_);
+    // console.log(res_);
 
     setTitle(res_.choices[0].message.content);
 

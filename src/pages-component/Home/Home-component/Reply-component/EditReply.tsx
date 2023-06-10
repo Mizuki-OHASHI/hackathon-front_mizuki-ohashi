@@ -3,6 +3,7 @@ import { Parser } from "@/methods/Parser";
 import { RequestEditReply } from "@/methods/RequestEdit";
 import { ArrowBarToDown, CircleOff } from "tabler-icons-react";
 import { Reply } from "@/methods/Type";
+import { Validation } from "@/methods/Validation";
 
 type Props = {
   updateReply: () => void;
@@ -57,22 +58,26 @@ export const EditReplies: FC<Props> = (props) => {
         </div>
         <div>
           <div className="flex flex-row-reverse mx-6 mb-1">
-            <button
-              type="button"
-              onClick={() => {
-                if (confirm("保存しますか？")) {
-                  editReply();
-                }
-              }}
-            >
-              <div className="px-1 flex flex-row overflow-auto rounded hover:bg-blue-300">
-                <ArrowBarToDown
-                  size={32}
-                  color={body == "" ? "gray" : "darkblue"}
-                />
-                <div className="my-auto mx-2">保存</div>
-              </div>
-            </button>
+            {body.length > 1000 || title.length > 50 ? (
+              <></>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm("保存しますか？")) {
+                    editReply();
+                  }
+                }}
+              >
+                <div className="px-1 flex flex-row overflow-auto rounded hover:bg-blue-300">
+                  <ArrowBarToDown
+                    size={32}
+                    color={body == "" ? "gray" : "darkblue"}
+                  />
+                  <div className="my-auto mx-2">保存</div>
+                </div>
+              </button>
+            )}
             <button
               type="button"
               onClick={() => {
@@ -86,6 +91,7 @@ export const EditReplies: FC<Props> = (props) => {
                 <div className="my-auto mx-2 text-red-700">取消</div>
               </div>
             </button>
+            <Validation body={body} title={title} />
           </div>
         </div>
       </div>

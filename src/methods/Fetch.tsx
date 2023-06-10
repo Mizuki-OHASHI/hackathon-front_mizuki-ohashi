@@ -172,7 +172,7 @@ export const FetchAllWorkspaces = async (
     });
 
     const workspaces = (await res.json()) as Workspaces;
-    console.log(workspaces);
+    // console.log(workspaces);
 
     if (workspaces.error.code != 0) {
       alert(
@@ -208,7 +208,7 @@ export const FetchUserStatistics = async (
     );
 
     const us = (await res.json()) as UserStatistics;
-    console.log(us);
+    // console.log(us);
 
     if (us.error.code != 0) {
       alert(
@@ -216,7 +216,7 @@ export const FetchUserStatistics = async (
         ${us.error.detail}`
       );
     }
-    console.log(us);
+    // console.log(us);
 
     setUserStatistics(us);
     return;
@@ -246,7 +246,7 @@ export const FetchChannelStatistics = async (
     );
 
     const us = (await res.json()) as ChannelStatistics;
-    console.log(us);
+    // console.log(us);
 
     if (us.error.code != 0) {
       alert(
@@ -254,7 +254,7 @@ export const FetchChannelStatistics = async (
         ${us.error.detail}`
       );
     }
-    console.log(us);
+    // console.log(us);
 
     setChannelStatistics(us);
     return;
@@ -284,7 +284,7 @@ export const FetchWorkspaceStatistics = async (
     );
 
     const us = (await res.json()) as WorkspaceStatistics;
-    console.log(us);
+    // console.log(us);
 
     if (us.error.code != 0) {
       alert(
@@ -292,7 +292,7 @@ export const FetchWorkspaceStatistics = async (
         ${us.error.detail}`
       );
     }
-    console.log(us);
+    // console.log(us);
 
     setWorkspaceStatistics(us);
     return;

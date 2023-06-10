@@ -87,7 +87,7 @@ export const ReplyWrapper: FC<Props> = (props) => {
                   <Menu.Item
                     onClick={() => {
                       if (confirm("削除しますか？")) {
-                        console.log(props.reply.id);
+                        // console.log(props.reply.id);
                         RequestDeleteReply(
                           props.reply.id,
                           props.currentUserId,

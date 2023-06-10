@@ -62,12 +62,13 @@ export const BasicUserInfo: FC<Props> = (props) => {
     close();
     if (confirm("本当にアカウントを削除しますか？")) {
       if (await RequestDeleteUser(props.currentUserId)) {
-        alert("アカウントを削除しました");
         form.reset();
         router.push("/");
       }
     }
+    form.reset();
   };
+
   const handleSubmitEdit = async () => {
     if (confirm("保存しますか？")) {
       if (await RequestEditUser(props.currentUserId, name, bio, imageUrl)) {
@@ -109,6 +110,19 @@ export const BasicUserInfo: FC<Props> = (props) => {
       <div className="py-2">
         <div className="border-b-2 border-blue-100">
           <div className="px-4 whitespace-normal">表示名</div>
+          {state == "edit" ? (
+            name?.length > 50 ? (
+              <div className="text-red-500 ml-auto mr-4">
+                50字以下にしてください
+              </div>
+            ) : (
+              <div className="text-blue-400 ml-auto mr-4">
+                {name?.length ?? 0}/50
+              </div>
+            )
+          ) : (
+            <></>
+          )}
         </div>
         {state == "edit" ? (
           <input
@@ -131,8 +145,21 @@ export const BasicUserInfo: FC<Props> = (props) => {
         </div>
       </div>
       <div className="py-2">
-        <div className="border-b-2 border-blue-100">
+        <div className="border-b-2 border-blue-100 flex flex-row">
           <div className="px-4">プロフィール</div>
+          {state == "edit" ? (
+            bio?.length > 100 ? (
+              <div className="text-red-500 ml-auto mr-4">
+                100字以下にしてください
+              </div>
+            ) : (
+              <div className="text-blue-400 ml-auto mr-4">
+                {bio?.length ?? 0}/100
+              </div>
+            )
+          ) : (
+            <></>
+          )}
         </div>
         {state == "edit" ? (
           <textarea
@@ -148,7 +175,7 @@ export const BasicUserInfo: FC<Props> = (props) => {
           </div>
         )}
       </div>
-      {state == "edit" ? (
+      {state == "edit" && !(name?.length > 50 || bio?.length > 100) ? (
         <div className="flex flex-row-reverse mx-6 mb-1">
           <button type="button" onClick={handleSubmitEdit}>
             <div className="px-1 flex flex-row overflow-auto rounded hover:bg-blue-300">

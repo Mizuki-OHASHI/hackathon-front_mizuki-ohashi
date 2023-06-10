@@ -22,7 +22,7 @@ const firebaseConfig = {
   measurementId: "G-WL1L0WGLLT",
 };
 
-console.log("firebase", firebaseConfig);
+// console.log("firebase", firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 

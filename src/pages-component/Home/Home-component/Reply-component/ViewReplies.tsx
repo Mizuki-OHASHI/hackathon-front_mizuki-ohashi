@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const ViewReplies: FC<Props> = (props) => {
-  console.log("replys", props.replies);
+  // console.log("replys", props.replies);
 
   if (props.replies == null) {
     return <div></div>;

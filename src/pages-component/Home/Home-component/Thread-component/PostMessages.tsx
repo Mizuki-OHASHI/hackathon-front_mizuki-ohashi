@@ -7,6 +7,7 @@ import { GPT } from "@/methods/gpt";
 import { MailForward, MessageChatbot, PhotoPlus } from "tabler-icons-react";
 import { UploadImageContainer } from "@/methods/UploadImage";
 import { MarkdownInfo } from "@/methods/MarkdownInfo";
+import { Validation } from "@/methods/Validation";
 
 type Props = {
   updateMessage: () => void;
@@ -53,7 +54,7 @@ export const PostMessages: FC<Props> = (props) => {
                 className="w-2/12"
                 type="button"
                 onClick={() => {
-                  if (body != "") {
+                  if (body != "" && body.length <= 1000 && title.length <= 50) {
                     makeTitle();
                   }
                 }}
@@ -89,23 +90,35 @@ export const PostMessages: FC<Props> = (props) => {
               <div className="flex mb-1 mx-6">
                 <UploadImageContainer setBody={setBody} />
                 <MarkdownInfo />
+                <Validation body={body} title={title} />
+
                 <button
-                  className="ml-auto"
+                  className="ml-0"
                   type="button"
                   onClick={() => {
-                    if (body != "") {
+                    if (
+                      body != "" &&
+                      body.length <= 1000 &&
+                      title.length <= 50
+                    ) {
                       postMessage();
                     }
                   }}
                 >
                   <div
                     className={`px-1 flex flex-row overflow-auto rounded ${
-                      body != "" ? "hover:bg-blue-300" : ""
+                      body != "" && body.length <= 1000 && title.length <= 50
+                        ? "hover:bg-blue-300"
+                        : ""
                     }`}
                   >
                     <MailForward
                       size={32}
-                      color={body == "" ? "gray" : "darkblue"}
+                      color={
+                        body != "" && body.length <= 1000 && title.length <= 50
+                          ? "darkblue"
+                          : "gray"
+                      }
                     />
                     <div className="my-auto mx-2">送信</div>
                   </div>

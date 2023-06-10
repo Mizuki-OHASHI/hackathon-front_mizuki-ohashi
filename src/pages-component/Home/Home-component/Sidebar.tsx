@@ -23,7 +23,7 @@ export const Sidebar: FC<Props> = (props) => {
   const router = useRouter();
   const { workspaceid, channelid } = router.query;
 
-  console.log(props.userInfo);
+  // console.log(props.userInfo);
 
   const listWorkspaces: FC<Array<Workspace>> = (workspaces) => {
     if (workspaces == null) {
@@ -83,17 +83,27 @@ export const Sidebar: FC<Props> = (props) => {
       <div className="w-6/12 h-[calc(100vh-4rem)] m-1 p-1 rounded bg-blue-50">
         <div className="text-xl text-center">チャンネル</div>
         <div className="my-1 py-1 border-t border-b border-blue-300">
-          <JoinChannel
-            channels={props.userInfo.channels}
-            currentUserId={props.currentUserId}
-            workspaceId={ConvQueryToString(workspaceid)}
-            updateUserInfo={props.updateUserInfo}
-          />
-          <CreateChannel
-            workspaceId={ConvQueryToString(workspaceid)}
-            currentUserId={props.currentUserId}
-            updateUserInfo={props.updateUserInfo}
-          />
+          {ConvQueryToString(workspaceid).length == 26 ? (
+            <>
+              <JoinChannel
+                channels={props.userInfo.channels}
+                currentUserId={props.currentUserId}
+                workspaceId={ConvQueryToString(workspaceid)}
+                updateUserInfo={props.updateUserInfo}
+              />
+              <CreateChannel
+                workspaceId={ConvQueryToString(workspaceid)}
+                currentUserId={props.currentUserId}
+                updateUserInfo={props.updateUserInfo}
+              />
+            </>
+          ) : (
+            <div className="text-gray-500 text-center">
+              ワークスペースを
+              <br />
+              選択してください
+            </div>
+          )}
         </div>
         <ListChannels
           channels={props.userInfo.channels}

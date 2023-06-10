@@ -29,7 +29,7 @@ export const Register: FC = () => {
 
   // const createUserWithGoogle = async (values: typeof form.values) => {
   //   const uid = await LogInWithGoogle();
-  //   console.log("LogInWithGoogle", await uid);
+  //   // console.log("LogInWithGoogle", await uid);
   //   if ((await uid) != "") {
   //     RequestCreateUser(uid, values.name, () => router.push("/home"));
   //   }
@@ -37,7 +37,7 @@ export const Register: FC = () => {
 
   const handleSubmit = (values: typeof form.values) => {
     if (registerWith == "email") {
-      console.log("try to register with email and password");
+      // console.log("try to register with email and password");
       RegisterWithEmail(values.email, values.password, setCurrentUserId);
     } else {
       LogInWithGoogle(setCurrentUserId);
@@ -45,9 +45,9 @@ export const Register: FC = () => {
   };
 
   useEffect(() => {
-    console.log("currentUserId");
+    // console.log("currentUserId");
     if (currentUserId != "") {
-      console.log(currentUserId);
+      // console.log(currentUserId);
       RequestCreateUser(currentUserId, form.values.name, () =>
         router.push("/home")
       );
