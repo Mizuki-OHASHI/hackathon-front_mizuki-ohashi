@@ -6,6 +6,7 @@ import { ConvQueryToString } from "@/methods/Tools";
 import { GPT } from "@/methods/gpt";
 import { MailForward, MessageChatbot, PhotoPlus } from "tabler-icons-react";
 import { UploadImageContainer } from "@/methods/UploadImage";
+import { MarkdownInfo } from "@/methods/MarkdownInfo";
 
 type Props = {
   updateMessage: () => void;
@@ -87,6 +88,7 @@ export const PostMessages: FC<Props> = (props) => {
             <div>
               <div className="flex mb-1 mx-6">
                 <UploadImageContainer setBody={setBody} />
+                <MarkdownInfo />
                 <button
                   className="ml-auto"
                   type="button"

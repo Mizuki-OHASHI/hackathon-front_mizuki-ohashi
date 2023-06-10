@@ -19,6 +19,7 @@ import { RequestDeleteUser } from "@/methods/RequestDelete";
 type Props = {
   currentUserId: string;
   userInfo: UserInfo;
+  onEdited: () => void;
 };
 
 export const BasicUserInfo: FC<Props> = (props) => {
@@ -57,13 +58,21 @@ export const BasicUserInfo: FC<Props> = (props) => {
     },
   });
 
-  const handleSubmit = async () => {
+  const handleSubmitDelete = async () => {
     close();
     if (confirm("本当にアカウントを削除しますか？")) {
       if (await RequestDeleteUser(props.currentUserId)) {
         alert("アカウントを削除しました");
         form.reset();
         router.push("/");
+      }
+    }
+  };
+  const handleSubmitEdit = async () => {
+    if (confirm("保存しますか？")) {
+      if (await RequestEditUser(props.currentUserId, name, bio, imageUrl)) {
+        props.onEdited();
+        router.push("/settings/user");
       }
     }
   };
@@ -141,23 +150,7 @@ export const BasicUserInfo: FC<Props> = (props) => {
       </div>
       {state == "edit" ? (
         <div className="flex flex-row-reverse mx-6 mb-1">
-          <button
-            type="button"
-            onClick={async () => {
-              if (confirm("保存しますか？")) {
-                if (
-                  await RequestEditUser(
-                    props.currentUserId,
-                    name,
-                    bio,
-                    imageUrl
-                  )
-                ) {
-                  router.push("/settings/user");
-                }
-              }
-            }}
-          >
+          <button type="button" onClick={handleSubmitEdit}>
             <div className="px-1 flex flex-row overflow-auto rounded hover:bg-blue-300">
               <ArrowBarToDown size={32} color="darkblue" />
               <div className="my-auto mx-2">保存</div>
@@ -184,7 +177,7 @@ export const BasicUserInfo: FC<Props> = (props) => {
       )}
       <Modal opened={opened} onClose={close} title="アカウントの削除">
         <Box maw={300} mx="auto">
-          <form onSubmit={form.onSubmit(handleSubmit)}>
+          <form onSubmit={form.onSubmit(handleSubmitDelete)}>
             <div>
               アカウントを削除します。
               <br />
