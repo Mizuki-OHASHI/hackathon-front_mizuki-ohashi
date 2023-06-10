@@ -9,14 +9,7 @@ import {
 } from "tabler-icons-react";
 import { RequestEditWorkspace } from "@/methods/RequestEdit";
 import { ConvDateTime, ConvQueryToString } from "@/methods/Tools";
-import {
-  Modal,
-  TextInput,
-  Group,
-  Checkbox,
-  Box,
-  PasswordInput,
-} from "@mantine/core";
+import { Modal, TextInput, Checkbox, Box, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { RequestDeleteWorkspace } from "@/methods/RequestDelete";
@@ -52,7 +45,7 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
     setBio(props.workspace.bio);
     setPublicPw(props.workspace.publicPw);
     setImageUrl(props.workspace.img);
-    console.log("test", props.workspace);
+    // console.log("test", props.workspace);
   }, [props.workspace]);
 
   const form = useForm({
@@ -80,11 +73,11 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
           form.values.pw
         )
       ) {
-        alert("ワークスペースを削除しました");
         form.reset();
         router.push("/settings");
       }
     }
+    form.reset();
   };
 
   const handleSubmitEdit = async () => {
@@ -153,8 +146,21 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
         </div>
       )}
       <div className="py-2">
-        <div className="border-b-2 border-blue-100">
+        <div className="border-b-2 border-blue-100 flex flex-row">
           <div className="px-4 whitespace-normal">ワークスペース名</div>
+          {state == "edit" ? (
+            name?.length > 50 ? (
+              <div className="text-red-500 ml-auto mr-4">
+                50字以下にしてください
+              </div>
+            ) : (
+              <div className="text-blue-400 ml-auto mr-4">
+                {name?.length ?? 0}/50
+              </div>
+            )
+          ) : (
+            <></>
+          )}
         </div>
         {state == "edit" ? (
           <input
@@ -189,8 +195,21 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
         </div>
       </div>
       <div className="py-2">
-        <div className="border-b-2 border-blue-100">
+        <div className="border-b-2 border-blue-100 flex flex-row">
           <div className="px-4 whitespace-normal">説明</div>
+          {state == "edit" ? (
+            bio?.length > 100 ? (
+              <div className="text-red-500 ml-auto mr-4">
+                100字以下にしてください
+              </div>
+            ) : (
+              <div className="text-blue-400 ml-auto mr-4">
+                {bio?.length ?? 0}/100
+              </div>
+            )
+          ) : (
+            <></>
+          )}
         </div>
         {state == "edit" ? (
           <textarea
@@ -205,8 +224,21 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
         )}
       </div>
       <div className="py-2">
-        <div className="border-b-2 border-blue-100">
+        <div className="border-b-2 border-blue-100 flex flex-row">
           <div className="px-4">公開パスワード</div>
+          {state == "edit" ? (
+            publicPw?.length > 50 ? (
+              <div className="text-red-500 ml-auto mr-4">
+                50字以下にしてください
+              </div>
+            ) : (
+              <div className="text-blue-400 ml-auto mr-4">
+                {publicPw?.length ?? 0}/50
+              </div>
+            )
+          ) : (
+            <></>
+          )}
         </div>
         {state == "edit" ? (
           <input
@@ -223,7 +255,9 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
         )}
       </div>
 
-      {state == "edit" && props.isOwner ? (
+      {state == "edit" &&
+      props.isOwner &&
+      !(name?.length > 50 || bio?.length > 100 || publicPw?.length > 50) ? (
         <>
           <PasswordInput
             placeholder="管理者用パスワード"
@@ -265,7 +299,9 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
         <Box maw={300} mx="auto">
           <form onSubmit={form.onSubmit(handleSubmitDelete)}>
             <div>
-              ワークスペースを削除します。
+              ワークスペース
+              {props.workspace.name == "" ? "" : ` (${props.workspace.name}) `}
+              を削除します。
               <br />
               配下の チャンネル, メッセージ および その返信 も削除されます。
               <br />
@@ -290,11 +326,11 @@ export const BasicWorkspaceInfo: FC<Props> = (props) => {
               label="管理者用パスワード"
               {...form.getInputProps("pw")}
             />
-            <Group position="center" mt="md">
-              <button type="submit" className="text-red-500">
+            <div className="mt-8 flex rounded-lg bg-red-700 hover:bg-red-600 text-white">
+              <button type="submit" className="mx-auto p-2 w-full">
                 ワークスペースを削除
               </button>
-            </Group>
+            </div>
           </form>
         </Box>
       </Modal>

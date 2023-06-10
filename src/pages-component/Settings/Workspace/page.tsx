@@ -80,7 +80,7 @@ export const SettingsWorkspace: FC = () => {
   }, [workspaceid]);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen text-blue-950">
       <SettingsHeader
         userInfo={userInfo}
         currentUserId={currentUserId}

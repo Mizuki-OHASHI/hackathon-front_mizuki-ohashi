@@ -92,7 +92,7 @@ export const MessageWrapper: FC<Props> = (props) => {
                           削除しますか？`
                         )
                       ) {
-                        console.log(props.message.id);
+                        // console.log(props.message.id);
                         RequestDeleteMessage(
                           props.message.id,
                           props.currentUserId,

@@ -62,7 +62,7 @@ export const ShowChannelStatistics: FC<Props> = (props) => {
         </BarChart>
       </ResponsiveContainer>
       <div className="my-2 border-b-2 border-blue-100">
-        <div className="px-4">メッセージの長さの分布</div>
+        <div className="px-4">メッセージの長さの累積度数分布</div>
       </div>
     </>
   );

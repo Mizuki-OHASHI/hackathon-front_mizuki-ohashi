@@ -55,17 +55,25 @@ export const CreateChannel: FC<ChannelProps> = (props) => {
 
     // functions will be used to validate values at corresponding key
     validate: {
-      name: (value) => (value.length < 2 ? "チャンネル名は２字以上" : null),
+      name: (value) =>
+        value.length < 2 || value.length > 50
+          ? "チャンネル名は２字以上５０字以下"
+          : null,
       privatePassword: (value) =>
-        value.length < 8 ? "パスワードは８字以上" : null,
+        value.length < 8 || value.length > 50
+          ? "パスワードは８字以上５０字以下"
+          : null,
       confirmPrivatePassword: (value, values) =>
         value !== values.privatePassword ? "パスワードが一致しません" : null,
       publicPassword: (value) =>
-        value.length < 8 && pw ? "パスワードは８字以上" : null,
+        value.length < 8 || (value.length > 50 && pw)
+          ? "パスワードは８字以上５０字以下"
+          : null,
       confirmPublicPassword: (value, values) =>
         value !== values.publicPassword && pw
           ? "パスワードが一致しません"
           : null,
+      bio: (value) => (value.length > 100 ? "１００字以下" : null),
     },
   });
 
@@ -125,7 +133,6 @@ export const CreateChannel: FC<ChannelProps> = (props) => {
               <></>
             )}
             <Textarea
-              withAsterisk
               label="説明"
               placeholder="後から追加することもできます"
               {...form.getInputProps("bio")}
@@ -180,17 +187,25 @@ export const CreateWorkspace: FC<WorkspaceProps> = (props) => {
 
     // functions will be used to validate values at corresponding key
     validate: {
-      name: (value) => (value.length < 2 ? "ワークスペース名は２字以上" : null),
+      name: (value) =>
+        value.length < 2 || value.length > 50
+          ? "ワークスペース名は２字以上５０字以下"
+          : null,
       privatePassword: (value) =>
-        value.length < 8 ? "パスワードは８字以上" : null,
+        value.length < 8 || value.length > 50
+          ? "パスワードは８字以上５０字以下"
+          : null,
       confirmPrivatePassword: (value, values) =>
         value !== values.privatePassword ? "パスワードが一致しません" : null,
       publicPassword: (value) =>
-        value.length < 8 && pw ? "パスワードは８字以上" : null,
+        value.length < 8 || (value.length > 50 && pw)
+          ? "パスワードは８字以上５０字以下"
+          : null,
       confirmPublicPassword: (value, values) =>
         value !== values.publicPassword && pw
           ? "パスワードが一致しません"
           : null,
+      bio: (value) => (value.length > 100 ? "１００字以下" : null),
     },
   });
 
@@ -250,7 +265,6 @@ export const CreateWorkspace: FC<WorkspaceProps> = (props) => {
               <></>
             )}
             <Textarea
-              withAsterisk
               label="説明"
               placeholder="後から追加することもできます"
               {...form.getInputProps("bio")}

@@ -33,7 +33,7 @@ export const Home: FC = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col text-blue-950">
       <div className="fixed top-0 left-0 right-0 h-12 bg-blue-900 text-white">
         <Header user={userInfo.user} currentUserId={currentUserId} />
       </div>

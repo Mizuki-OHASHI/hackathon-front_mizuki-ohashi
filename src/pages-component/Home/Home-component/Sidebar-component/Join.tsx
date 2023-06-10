@@ -179,7 +179,7 @@ export const JoinWorkspace: FC<WorkspaceProps> = (props) => {
 
   useEffect(() => {
     FetchAllWorkspaces(setWorkspaces);
-    console.log("FetchAllWorkspaces(setWorkspaces)");
+    // console.log("FetchAllWorkspaces(setWorkspaces)");
   }, []);
 
   useEffect(() => {

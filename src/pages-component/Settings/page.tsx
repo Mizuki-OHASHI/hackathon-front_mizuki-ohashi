@@ -25,7 +25,7 @@ export const SettingsInit: FC = () => {
   }, [currentUserId]);
 
   return (
-    <div className="w-screen h-screen pt-12 bg-gradient-to-t from-blue-200 to-blue-50">
+    <div className="w-screen h-screen pt-12 bg-gradient-to-t from-blue-200 to-blue-50 text-blue-950">
       <SettingsHeader
         userInfo={userInfo}
         currentUserId={currentUserId}

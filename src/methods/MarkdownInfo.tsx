@@ -6,7 +6,7 @@ export const MarkdownInfo: FC = () => {
   return (
     <HoverCard shadow="md" closeDelay={1000}>
       <HoverCard.Target>
-        <QuestionMark size={32} color="darkblue" className="mx-4" />
+        <QuestionMark size={32} color="darkblue" className="ml-2" />
       </HoverCard.Target>
       <HoverCard.Dropdown>
         <div className="font-mono">

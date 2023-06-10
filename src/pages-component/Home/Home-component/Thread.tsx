@@ -61,7 +61,7 @@ export const Thread: FC<Props> = (props) => {
     if (messageId == "default") {
       return (
         <div className="absolute top-0 bottom-0 left-0 right-0">
-          <div className="text-4xl px-4 py-2 whitespace-nowrap overflow-x-scroll">
+          <div className="text-3xl px-4 py-2 whitespace-nowrap overflow-x-scroll">
             {channelInfo.channel.name}
           </div>
           <ViewMessages
@@ -79,7 +79,7 @@ export const Thread: FC<Props> = (props) => {
       return (
         <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-row">
           <div className="w-6/12 relative">
-            <div className="text-4xl px-4 py-2 whitespace-nowrap overflow-x-scroll">
+            <div className="text-3xl px-4 py-2 whitespace-nowrap overflow-x-scroll">
               {channelInfo.channel.name}
             </div>
             <ViewMessages
@@ -94,7 +94,7 @@ export const Thread: FC<Props> = (props) => {
           </div>
           <div className="w-6/12 relative bg-blue-50">
             <div className="flex flex-row">
-              <div className="text-4xl px-4 py-2 whitespace-nowrap overflow-x-scroll">
+              <div className="text-3xl px-4 py-2 whitespace-nowrap overflow-x-scroll">
                 {messageInfo.root.title}
               </div>
               <div className="ml-auto my-auto mr-4">

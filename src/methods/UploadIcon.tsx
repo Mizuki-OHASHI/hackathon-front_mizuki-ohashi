@@ -29,17 +29,17 @@ export const UploadIcon: FC<Props> = (props) => {
 
     imageCompression(file, options)
       .then((compressedFile) => {
-        console.log("File compressed successfully");
+        // console.log("File compressed successfully");
 
         const imageUrl = uuidv4();
 
-        console.log("Image URL:", imageUrl);
+        // console.log("Image URL:", imageUrl);
         const storageRef = ref(storage, imageUrl);
 
         uploadBytes(storageRef, compressedFile)
           .then((snapshot) => {
-            console.log(snapshot.ref);
-            console.log("File uploaded successfully");
+            // console.log(snapshot.ref);
+            // console.log("File uploaded successfully");
             props.setImageUrl(imageUrl);
           })
           .catch((error) => {
@@ -47,7 +47,7 @@ export const UploadIcon: FC<Props> = (props) => {
           });
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
 
