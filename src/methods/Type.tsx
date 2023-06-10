@@ -208,27 +208,36 @@ export type messagecount = {
   count: number;
 };
 
+export type messagelength = {
+  length: number;
+  rate: number;
+};
+
 export type UserStatistics = {
   id: string;
   messagecounts: Array<messagecount>;
+  messagelengths: Array<messagelength>;
   error: MyError;
 };
 
 export const EmptyUserStatistics = {
   id: "",
   messagecounts: [],
+  messagelengths: [],
   error: EmptyError,
 };
 
 export type ChannelStatistics = {
   id: string;
   messagecounts: Array<messagecount>;
+  messagelengths: Array<messagelength>;
   error: MyError;
 };
 
 export const EmptyChannelStatistics = {
   id: "",
   messagecounts: [],
+  messagelengths: [],
   error: EmptyError,
 };
 

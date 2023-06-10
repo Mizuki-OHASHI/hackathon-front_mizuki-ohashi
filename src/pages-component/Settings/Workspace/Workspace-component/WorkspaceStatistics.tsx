@@ -61,9 +61,9 @@ export const ShowWorkspaceStatistics: FC<Props> = (props) => {
           {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
         </BarChart>
       </ResponsiveContainer>
-      <div className="my-2 border-b-2 border-blue-100">
+      {/* <div className="my-2 border-b-2 border-blue-100">
         <div className="px-4">メッセージの長さの累積度数分布</div>
-      </div>
+      </div> */}
     </>
   );
 };
