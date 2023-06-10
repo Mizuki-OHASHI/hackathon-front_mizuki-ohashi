@@ -125,9 +125,13 @@ export const JoinChannel: FC<ChannelProps> = (props) => {
               label="管理者として参加する"
               {...form.getInputProps("owner", { type: "checkbox" })}
             />
-            <Group position="center" mt="md">
-              <button type="submit">参加</button>
-            </Group>
+            {/* <Group position="center" mt="md"> */}
+            <div className="mt-8 flex rounded-lg bg-blue-700 hover:bg-blue-600 text-white">
+              <button type="submit" className="mx-auto p-2 w-full">
+                参加
+              </button>
+            </div>
+            {/* </Group> */}
           </form>
         </Box>
       </Modal>
@@ -230,9 +234,11 @@ export const JoinWorkspace: FC<WorkspaceProps> = (props) => {
               label="管理者として参加する"
               {...form.getInputProps("owner", { type: "checkbox" })}
             />
-            <Group position="center" mt="md">
-              <button type="submit">参加</button>
-            </Group>
+            <div className="mt-8 flex rounded-lg bg-blue-700 hover:bg-blue-600 text-white">
+              <button type="submit" className="mx-auto p-2 w-full">
+                参加
+              </button>
+            </div>
           </form>
         </Box>
       </Modal>

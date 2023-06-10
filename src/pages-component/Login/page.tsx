@@ -107,16 +107,16 @@ export const Login: FC = () => {
                   placeholder=""
                   {...form.getInputProps("password")}
                 />
-                <Group position="center" mt="md">
-                  <button type="submit" className="p-2">
+                <div className="mt-8 flex rounded-lg bg-blue-700 hover:bg-blue-600 text-white">
+                  <button type="submit" className="p-2 w-full">
                     メールアドレスとパスワードでログイン
                   </button>
-                </Group>
+                </div>
               </form>
             ) : (
-              <div className="flex">
+              <div className="mt-8 flex rounded-lg bg-blue-700 hover:bg-blue-600 text-white">
                 <button
-                  className="mx-auto p-2"
+                  className="mx-auto p-2 w-full"
                   onClick={() => {
                     loadHomeWithGoogle();
                   }}
@@ -131,74 +131,3 @@ export const Login: FC = () => {
     </div>
   );
 };
-
-// export const Login2: FC = () => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const router = useRouter();
-
-//   const loadHomeWithEmailAndPassword = async (
-//     e: FormEvent<HTMLFormElement>,
-//     email: string,
-//     password: string
-//   ) => {
-//     e.preventDefault();
-//     if (await LogInWithEmail(email, password)) {
-//       router.push("/home");
-//     }
-//   };
-
-//   const loadHomeWithGoogle = async () => {
-//     if (await LogInWithGoogle()) {
-//       router.push("/home");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <div>
-//         <div>ログイン</div>
-//         <div>
-//           <form
-//             onSubmit={(e) => {
-//               loadHomeWithEmailAndPassword(e, email, password);
-//             }}
-//           >
-//             <div>
-//               <div>メールアドレス</div>
-//               <input
-//                 type="email"
-//                 value={email}
-//                 onChange={(e) => setEmail(e.target.value)}
-//               ></input>
-//             </div>
-//             <div>
-//               <div>パスワード</div>
-//               <input
-//                 type="password"
-//                 value={password}
-//                 onChange={(e) => setPassword(e.target.value)}
-//               ></input>
-//             </div>
-//             <input
-//               type="submit"
-//               value="メールアドレスとパスワードでログインする"
-//             />
-//           </form>
-//         </div>
-//       </div>
-//       <div>
-//         <div>
-//           <button
-//             onClick={() => {
-//               loadHomeWithGoogle();
-//             }}
-//           >
-//             Google アカウントでログインする
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };

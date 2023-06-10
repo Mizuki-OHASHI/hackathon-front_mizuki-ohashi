@@ -7,6 +7,7 @@ import { Menu } from "@mantine/core";
 import { DotsVertical, Edit, Messages, Trash } from "tabler-icons-react";
 import { EditReplies } from "@/pages-component/Home/Home-component/Reply-component/EditReply";
 import { useRouter } from "next/router";
+import { ShowIcon } from "@/methods/ShowIcon";
 
 type Props = {
   updateReply: () => void;
@@ -32,14 +33,27 @@ export const ReplyWrapper: FC<Props> = (props) => {
       className="flex flex-col border-2 border-blue-200 rounded-lg m-2 bg-blue-50"
     >
       <div>
-        <div className="flex flex-law">
-          <div className="m-2">{props.reply.name}</div>
-          <div className="m-2">{props.reply.title}</div>
-          <div className="m-2">{ConvDateTime(props.reply.postedat)}</div>
+        <div className="flex flex-row relative">
+          <div className="my-auto mx-2">
+            <ShowIcon
+              iconId={props.reply.icon}
+              iconSize={32}
+              onClick={() => {}}
+            />
+          </div>
+          <div className="px-4 py-2 border-r-2 border-blue-200">
+            {props.reply.name}
+          </div>
+          <div className="p-2 whitespace-nowrap overflow-x-scroll">
+            {props.reply.title}
+          </div>
+          <div className="absolute right-12 my-2 w-30 pl-2 bg-blue-50">
+            {ConvDateTime(props.reply.postedat)}
+          </div>
           <Menu trigger="hover" shadow="md" width={200}>
             <Menu.Target>
-              <button>
-                <DotsVertical size={16} />
+              <button className="mt-1 pl-2 pr-3 py-2 absolute right-0 bg-blue-50">
+                <DotsVertical size={20} color="darkblue" />
               </button>
             </Menu.Target>
 

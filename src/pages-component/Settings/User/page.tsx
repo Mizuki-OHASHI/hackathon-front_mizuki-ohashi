@@ -51,7 +51,15 @@ export const SettingsUser: FC = () => {
       />
       <div className="h-screen pt-12 flex flex-row">
         <div className="w-4/12 m-4 p-8 rounded-2xl bg-blue-50 whitespace-nowrap overflow-y-scroll">
-          <BasicUserInfo currentUserId={currentUserId} userInfo={userInfo} />
+          <BasicUserInfo
+            currentUserId={currentUserId}
+            userInfo={userInfo}
+            onEdited={() =>
+              FetchUserInfo(currentUserId, setUserInfo, () => {
+                router.push("/");
+              })
+            }
+          />
         </div>
         <div className="w-4/12 border-y-4 border-blue-50 m-4 p-8 rounded-2xl bg-blue-50  whitespace-nowrap overflow-y-scroll">
           <ListWorkspaceAndChannel

@@ -249,7 +249,7 @@ export const BasicChannelInfo: FC<Props> = (props) => {
             <div>
               チャンネルを削除します。
               <br />
-              配下のメッセージも削除されます。
+              配下のメ ッセージ および その返信 も削除されます。
               <br />
               この操作は取り消せません。
             </div>

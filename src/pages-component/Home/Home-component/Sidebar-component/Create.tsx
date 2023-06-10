@@ -130,9 +130,11 @@ export const CreateChannel: FC<ChannelProps> = (props) => {
               placeholder="後から追加することもできます"
               {...form.getInputProps("bio")}
             />
-            <Group position="center" mt="md">
-              <button type="submit">新規作成</button>
-            </Group>
+            <div className="mt-8 flex rounded-lg bg-blue-700 hover:bg-blue-600 text-white">
+              <button type="submit" className="mx-auto p-2 w-full">
+                新規作成
+              </button>
+            </div>
           </form>
         </Box>
       </Modal>
@@ -253,9 +255,11 @@ export const CreateWorkspace: FC<WorkspaceProps> = (props) => {
               placeholder="後から追加することもできます"
               {...form.getInputProps("bio")}
             />
-            <Group position="center" mt="md">
-              <button type="submit">新規作成</button>
-            </Group>
+            <div className="mt-8 flex rounded-lg bg-blue-700 hover:bg-blue-600 text-white">
+              <button type="submit" className="mx-auto p-2 w-full">
+                新規作成
+              </button>
+            </div>
           </form>
         </Box>
       </Modal>

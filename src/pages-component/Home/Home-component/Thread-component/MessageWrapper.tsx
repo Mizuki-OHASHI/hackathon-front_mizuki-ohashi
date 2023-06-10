@@ -33,7 +33,7 @@ export const MessageWrapper: FC<Props> = (props) => {
       className="flex flex-col border-2 border-blue-200 rounded-lg m-2"
     >
       <div>
-        <div className="flex flex-law relative">
+        <div className="flex flex-row relative">
           <div className="my-auto mx-2">
             <ShowIcon
               iconId={props.message.icon}
@@ -86,7 +86,12 @@ export const MessageWrapper: FC<Props> = (props) => {
                   </Menu.Item>
                   <Menu.Item
                     onClick={() => {
-                      if (confirm("削除しますか？")) {
+                      if (
+                        confirm(
+                          `配下の返信も削除されます。
+                          削除しますか？`
+                        )
+                      ) {
                         console.log(props.message.id);
                         RequestDeleteMessage(
                           props.message.id,
