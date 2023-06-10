@@ -1,4 +1,4 @@
-import { HoverCard, Button, Divider } from "@mantine/core";
+import { HoverCard, Divider } from "@mantine/core";
 import { FC } from "react";
 import { QuestionMark } from "tabler-icons-react";
 

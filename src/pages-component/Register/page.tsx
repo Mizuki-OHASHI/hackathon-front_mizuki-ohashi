@@ -160,13 +160,15 @@ export const Register: FC = () => {
               ) : (
                 <></>
               )}
-              <Group position="center" mt="md">
-                <button type="submit" className="p-2">
+              {/* <Group position="center" mt="md"> */}
+              <div className="mt-8 flex rounded-lg bg-blue-700 hover:bg-blue-600 text-white">
+                <button type="submit" className="p-2 w-full">
                   {registerWith == "email"
                     ? "メールアドレスとパスワードで登録"
                     : "Google アカウントで登録"}
                 </button>
-              </Group>
+              </div>
+              {/* </Group> */}
             </form>
           </Box>
         </div>
@@ -174,89 +176,3 @@ export const Register: FC = () => {
     </div>
   );
 };
-
-// export const Register2: FC = () => {
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const router = useRouter();
-
-//   const createUserWithEmailAndPassword = async (
-//     e: FormEvent<HTMLFormElement>,
-//     name: string,
-//     email: string,
-//     password: string
-//   ) => {
-//     e.preventDefault();
-//     if (await RegisterWithEmail(email, password)) {
-//       console.log("successfully registered to FireAuth");
-//       if (await RequestCreateUser(CurrentUserId(), name)) {
-//         console.log("successfully registered to the data base");
-//         router.push("/home");
-//       }
-//     }
-//   };
-
-//   const createUserWithGoogle = async (name: string) => {
-//     if (await LogInWithGoogle()) {
-//       if (await RequestCreateUser(CurrentUserId(), name)) {
-//         router.push("/home");
-//       }
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <div>
-//         <div>新規登録</div>
-//         <div>
-//           <div>名前</div>
-//           <input
-//             type="text"
-//             value={name}
-//             onChange={(e) => {
-//               setName(e.target.value);
-//             }}
-//           ></input>
-//         </div>
-//         <div>
-//           <form
-//             onSubmit={(e) => {
-//               createUserWithEmailAndPassword(e, name, email, password);
-//             }}
-//           >
-//             <div>
-//               <div>メールアドレス</div>
-//               <input
-//                 type="email"
-//                 value={email}
-//                 onChange={(e) => setEmail(e.target.value)}
-//               ></input>
-//             </div>
-//             <div>
-//               <div>パスワード</div>
-//               <input
-//                 type="password"
-//                 value={password}
-//                 onChange={(e) => setPassword(e.target.value)}
-//               ></input>
-//             </div>
-//             <input type="submit" value="メールアドレスとパスワードで登録する" />
-//           </form>
-//         </div>
-//       </div>
-//       <div>
-//         <div>
-//           <button
-//             onClick={() => {
-//               createUserWithGoogle(name);
-//             }}
-//           >
-//             Google アカウントで登録する
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
